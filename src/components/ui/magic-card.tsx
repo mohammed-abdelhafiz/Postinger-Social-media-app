@@ -30,6 +30,11 @@ export function MagicCard({
 }: MagicCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const mouseX = useMotionValue(-gradientSize);
   const mouseY = useMotionValue(-gradientSize);
 
@@ -129,7 +134,7 @@ export function MagicCard({
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background: useMotionTemplate`
-            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${theme === "dark" ? "#262626" : "#D9D9D955"}, transparent 100%)
+            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${mounted && theme === "dark" ? "#262626" : "#D9D9D955"}, transparent 100%)
           `,
           opacity: gradientOpacity,
         }}

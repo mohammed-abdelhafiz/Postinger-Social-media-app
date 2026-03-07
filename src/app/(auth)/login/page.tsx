@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -28,21 +27,16 @@ export default function LoginPage() {
           <CardContent>
             <LoginForm />
           </CardContent>
-          <CardFooter>
-            <div className="flex flex-col gap-2 pt-4 w-full">
-              <Button type="submit" form="login-form">
-                Login
-              </Button>
-              <p className="text-sm text-muted-foreground ml-0.5">
-                Don&apos;t have an account?
-                <Link
-                  href="/register"
-                  className="ml-1 hover:underline text-foreground"
-                >
-                  Register
-                </Link>
-              </p>
-            </div>
+          <CardFooter className="pt-4">
+            <p className="text-sm text-muted-foreground ml-0.5">
+              Don&apos;t have an account?
+              <Link
+                href="/register"
+                className="ml-1 hover:underline text-foreground"
+              >
+                Register
+              </Link>
+            </p>
           </CardFooter>
         </MagicCard>
       </Card>

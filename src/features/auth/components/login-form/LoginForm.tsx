@@ -4,16 +4,17 @@ import { FieldGroup } from "@/components/ui/field";
 
 import { toast } from "sonner";
 
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { PasswordField } from "@/components/shared/PasswordField";
+import { PasswordField } from "@/components/shared/password-field/PasswordField";
 import { InputField } from "@/components/shared/InputField";
 import { loginSchema, LoginSchema } from "@/features/auth/types/auth.schema";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const LoginForm = () => {
-  const form = useForm<LoginSchema>({
+  const { control, handleSubmit } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -27,30 +28,24 @@ export const LoginForm = () => {
   };
 
   return (
-    <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
+    <form
+      id="login-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4"
+    >
       <FieldGroup className="gap-5">
-        <Controller
+        <InputField
+          control={control}
           name="email"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <InputField
-              field={field}
-              fieldState={fieldState}
-              label="Email"
-              placeholder="john.doe@example.com"
-            />
-          )}
+          label="Email"
+          placeholder="john.doe@example.com"
         />
-        <Controller
+
+        <PasswordField
+          control={control}
           name="password"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <PasswordField
-              field={field}
-              fieldState={fieldState}
-              control={form.control}
-            />
-          )}
+          label="Password"
+          placeholder="••••••••"
         />
         <Link
           href="/reset-password"
@@ -59,6 +54,13 @@ export const LoginForm = () => {
           Forgot your password?
         </Link>
       </FieldGroup>
+      <Button
+        type="submit"
+        form="login-form"
+        className="w-full cursor-pointer"
+      >
+        Login
+      </Button>
     </form>
   );
 };

@@ -1,20 +1,21 @@
 "use client";
 
-import { FieldGroup } from "@/components/ui/field";
-
 import { toast } from "sonner";
 
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   registerSchema,
   RegisterSchema,
 } from "@/features/auth/types/auth.schema";
-import { PasswordField } from "@/components/shared/PasswordField";
+
+import { FieldGroup } from "@/components/ui/field";
 import { InputField } from "@/components/shared/InputField";
+import { PasswordField } from "@/components/shared/password-field/PasswordField";
+import { Button } from "@/components/ui/button";
 
 export const RegisterForm = () => {
-  const form = useForm<RegisterSchema>({
+  const { control, handleSubmit } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
@@ -30,58 +31,49 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form id="register-form" onSubmit={form.handleSubmit(onSubmit)}>
+    <form
+      id="register-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4"
+    >
       <FieldGroup className="gap-5">
         <div className="flex items-center gap-3">
-          <Controller
+          <InputField
+            control={control}
             name="name"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <InputField
-                field={field}
-                fieldState={fieldState}
-                label="Name"
-                placeholder="John Doe"
-              />
-            )}
+            label="Name"
+            placeholder="John Doe"
           />
-          <Controller
+
+          <InputField
+            control={control}
             name="username"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <InputField
-                field={field}
-                fieldState={fieldState}
-                label="Username"
-                placeholder="john_doe"
-              />
-            )}
+            label="Username"
+            placeholder="john_doe"
           />
         </div>
-        <Controller
+
+        <InputField
+          control={control}
           name="email"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <InputField
-              field={field}
-              fieldState={fieldState}
-              label="Email"
-              placeholder="john.doe@example.com"
-            />
-          )}
+          label="Email"
+          placeholder="john.doe@example.com"
         />
-        <Controller
+
+        <PasswordField
+          control={control}
           name="password"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <PasswordField
-              field={field}
-              fieldState={fieldState}
-              control={form.control}
-            />
-          )}
+          label="Password"
+          placeholder="••••••••"
         />
       </FieldGroup>
+      <Button
+        type="submit"
+        form="register-form"
+        className="w-full cursor-pointer"
+      >
+        Register
+      </Button>
     </form>
   );
 };
