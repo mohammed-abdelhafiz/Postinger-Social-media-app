@@ -4,7 +4,7 @@ import { FieldGroup } from "@/components/ui/field";
 
 import { toast } from "sonner";
 
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { InputField } from "@/components/shared/InputField";
@@ -29,17 +29,11 @@ export const ResetPasswordForm = () => {
   return (
     <form id="reset-password-form" onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup className="gap-5">
-        <Controller
-          name="email"
+        <InputField
           control={form.control}
-          render={({ field, fieldState }) => (
-            <InputField
-              field={field}
-              fieldState={fieldState}
-              label="Email"
-              placeholder="john.doe@example.com"
-            />
-          )}
+          name="email"
+          label="Email"
+          placeholder="john.doe@example.com"
         />
       </FieldGroup>
     </form>
