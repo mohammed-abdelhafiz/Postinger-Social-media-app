@@ -1,7 +1,7 @@
+import { cookies } from "next/headers";
 
-
-const page = () => {
-  return <div>page</div>;
-};
-
-export default page;
+export default async function ProfilePage() {
+  const cookieStore = await cookies();
+  console.log(cookieStore.getAll());
+  return <div></div>;
+}

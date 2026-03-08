@@ -6,14 +6,15 @@ import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 
 export const useLoginMutation = () => {
-  const authenticate = useAuthStore((s) => s.authenticate);
+  const setAccessToken = useAuthStore((s) => s.setAccessToken);
+  const setUser = useAuthStore((s) => s.setUser);
   const router = useRouter();
-
   return useMutation({
     mutationFn: login,
 
     onSuccess: ({ message, user, accessToken }) => {
-      authenticate(user, accessToken);
+      setAccessToken(accessToken);
+      setUser(user);
       toast.success(message);
       router.replace("/");
     },
