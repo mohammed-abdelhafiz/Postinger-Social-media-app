@@ -2,7 +2,9 @@ import axios from "axios";
 import { ApiError } from "./apiError";
 import { useAuthStore } from "@/store/authStore";
 
-const api = axios.create();
+const api = axios.create({
+  baseURL: "https://postinger-app.vercel.app/api",
+});
 
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
