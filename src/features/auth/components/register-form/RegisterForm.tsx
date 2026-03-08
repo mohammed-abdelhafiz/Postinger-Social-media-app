@@ -1,21 +1,21 @@
 "use client";
 
-import { toast } from "sonner";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   registerSchema,
-  RegisterSchema,
+  RegisterData,
 } from "@/features/auth/types/auth.schema";
 
 import { FieldGroup } from "@/components/ui/field";
 import { InputField } from "@/components/shared/InputField";
 import { PasswordField } from "@/components/shared/password-field/PasswordField";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { useRegisterMutation } from "../../hooks/useRegisterMutation";
 
 export const RegisterForm = () => {
-  const { control, handleSubmit } = useForm<RegisterSchema>({
+  const { control, handleSubmit } = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
@@ -25,9 +25,10 @@ export const RegisterForm = () => {
     },
   });
 
-  const onSubmit = (data: RegisterSchema) => {
-    toast.success("Account created successfully!");
-    console.log(data);
+  const registerMutation = useRegisterMutation();
+
+  const onSubmit = async (registerData: RegisterData) => {
+    registerMutation.mutate(registerData);
   };
 
   return (
@@ -71,8 +72,13 @@ export const RegisterForm = () => {
         type="submit"
         form="register-form"
         className="w-full cursor-pointer"
+        disabled={registerMutation.isPending}
       >
-        Register
+        {registerMutation.isPending ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          "Register"
+        )}
       </Button>
     </form>
   );

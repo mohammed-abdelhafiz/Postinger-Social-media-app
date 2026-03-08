@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { InitialAuthProvider } from "@/providers/InitialAuthProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,11 +27,13 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider>
           <ReactQueryProvider>
-            <TooltipProvider>
-              <main className="min-h-screen">{children}</main>
-              <ThemeToggle />
-              <Toaster richColors />
-            </TooltipProvider>
+            <InitialAuthProvider>
+              <TooltipProvider>
+                <main className="min-h-screen">{children}</main>
+                <ThemeToggle />
+                <Toaster richColors />
+              </TooltipProvider>
+            </InitialAuthProvider>
           </ReactQueryProvider>
         </ThemeProvider>
       </body>

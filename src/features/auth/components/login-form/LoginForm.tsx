@@ -2,29 +2,31 @@
 
 import { FieldGroup } from "@/components/ui/field";
 
-import { toast } from "sonner";
+
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { PasswordField } from "@/components/shared/password-field/PasswordField";
 import { InputField } from "@/components/shared/InputField";
-import { loginSchema, LoginSchema } from "@/features/auth/types/auth.schema";
+import { LoginData, loginSchema } from "@/features/auth/types/auth.schema";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useLoginMutation } from "../../hooks/useLoginMutation";
+import { Loader2 } from "lucide-react";
 
 export const LoginForm = () => {
-  const { control, handleSubmit } = useForm<LoginSchema>({
+  const { control, handleSubmit } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
+  const loginMutation = useLoginMutation();
 
-  const onSubmit = (data: LoginSchema) => {
-    toast.success("Login successful!");
-    console.log(data);
+  const onSubmit = async (registerData: LoginData) => {
+    loginMutation.mutate(registerData);
   };
 
   return (
@@ -58,8 +60,13 @@ export const LoginForm = () => {
         type="submit"
         form="login-form"
         className="w-full cursor-pointer"
+        disabled={loginMutation.isPending}
       >
-        Login
+        {loginMutation.isPending ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          "Login"
+        )}
       </Button>
     </form>
   );

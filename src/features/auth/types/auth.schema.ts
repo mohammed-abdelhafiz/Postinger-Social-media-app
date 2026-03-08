@@ -24,14 +24,14 @@ export const registerSchema = z.object({
     ),
 });
 
-export type RegisterSchema = z.infer<typeof registerSchema>;
+export type RegisterData = z.infer<typeof registerSchema>;
 
 export const loginSchema = z.object({
   email: z.email("Invalid email address").trim().toLowerCase(),
   password: z.string().trim(),
 });
 
-export type LoginSchema = z.infer<typeof loginSchema>;
+export type LoginData = z.infer<typeof loginSchema>;
 
 export const resetPasswordSchema = z.object({
   email: z.email("Invalid email address").trim().toLowerCase(),
