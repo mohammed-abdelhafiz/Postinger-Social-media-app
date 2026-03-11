@@ -4,8 +4,8 @@ import { create } from "zustand";
 interface AuthStore {
   user: User | null;
   accessToken: string | null;
-  setAccessToken: (accessToken: string) => void;
-  setUser: (user: User) => void;
+  setAccessToken: (accessToken: string | null) => void;
+  setUser: (user: User | null) => void;
   clearAuthState: () => void;
 }
 

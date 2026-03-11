@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div>Home page</div>
   );
