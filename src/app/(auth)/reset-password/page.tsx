@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,10 +8,10 @@ import {
 } from "@/components/ui/card";
 import { MagicCard } from "@/components/ui/magic-card";
 
-import { ResetPasswordForm } from "@/features/auth/components/reset-password-form/ResetPasswordForm";
+import { RequestResetPasswordForm } from "@/features/auth/components/request-reset-password-form/RequestResetPasswordForm";
 import Link from "next/link";
 
-export default function ResetPasswordPage() {
+export default function RequestResetPasswordPage() {
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="w-full max-w-md sm:max-w-lg p-0">
@@ -27,23 +26,18 @@ export default function ResetPasswordPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResetPasswordForm />
+            <RequestResetPasswordForm />
           </CardContent>
-          <CardFooter>
-            <div className="flex flex-col gap-2 pt-4 w-full">
-              <Button type="submit" form="reset-password-form">
-                Reset Password
-              </Button>
-              <p className="text-sm text-muted-foreground ml-0.5">
-                Remember your password?
-                <Link
-                  href="/login"
-                  className="ml-1 hover:underline text-foreground"
-                >
-                  Login
-                </Link>
-              </p>
-            </div>
+          <CardFooter className="pt-4">
+            <p className="text-sm text-muted-foreground ml-0.5">
+              Remember your password?
+              <Link
+                href="/login"
+                className="ml-1 hover:underline text-foreground"
+              >
+                Login
+              </Link>
+            </p>
           </CardFooter>
         </MagicCard>
       </Card>
