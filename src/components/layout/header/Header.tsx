@@ -36,10 +36,10 @@ export function Header() {
 
   return (
     <motion.header
-      className="sticky top-0 right-0 left-0 z-50 transition-all duration-300"
+      className="transition-all duration-300 px-4 md:px-6"
       variants={headerVariants}
       initial="initial"
-      animate={isScrolled ? "scrolled" : "animate"}
+      animate="animate"
       transition={{ duration: 0.3, ease: "easeInOut" }}
       style={{
         backdropFilter: isScrolled ? "blur(20px)" : "none",
@@ -62,7 +62,7 @@ export function Header() {
             href="/"
             className="flex items-center space-x-2"
           >
-            <Logo/>
+            <Logo />
           </Link>
         </motion.div>
 
