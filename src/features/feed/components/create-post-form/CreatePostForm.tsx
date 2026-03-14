@@ -15,6 +15,8 @@ import { useNewPostInputStore } from "@/store/newPostInput";
 import { UploadedImage } from "../../types/feed.types";
 import { ImagePreview } from "./ImagesPreview";
 import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
+import { AxiosProgressEvent } from "axios";
+import { Progress } from "@/components/ui/progress";
 
 export function CreatePostForm() {
   const user = useAuthStore((s) => s.user);
@@ -24,13 +26,42 @@ export function CreatePostForm() {
   const [uploadedImage, setUploadedImage] = useState<UploadedImage | null>(
     null,
   );
+
   const [textContent, setTextContent] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const createPostMutation = useCreatePostMutation();
 
   useEffect(() => {
     setTextareaRef(textareaRef);
   }, [setTextareaRef]);
+
+  const handleCreatePostSubmit = () => {
+    const formData = new FormData();
+    if (textContent.trim().length > 0) {
+      formData.append("text", textContent);
+    }
+    if (uploadedImage) {
+      formData.append("image", uploadedImage.file);
+    }
+
+    createPostMutation.mutate(
+      {
+        formData,
+        handleProgress: (event: AxiosProgressEvent) => {
+          const percent = Math.round((event.loaded * 100) / (event.total || 1));
+          setProgress(percent);
+        },
+      },
+      {
+        onSuccess: () => {
+          setTextContent("");
+          setUploadedImage(null);
+          setProgress(0);
+        },
+      },
+    );
+  };
 
   return (
     <Field className="w-full mx-auto">
@@ -41,15 +72,18 @@ export function CreatePostForm() {
           ref={textareaRef}
           value={textContent}
           onChange={(e) => setTextContent(e.target.value)}
+          disabled={createPostMutation.isPending}
         />
 
         <ImagePreview
+          isUploading={createPostMutation.isPending}
           uploadedImage={uploadedImage}
           setUploadedImage={setUploadedImage}
         />
+
         <InputGroupAddon align="block-end" className="px-3 pb-3">
           <EmojiSelector textareaRef={textareaRef} />
-
+          {progress > 0 && <Progress value={progress} />}
           <div className="ml-auto flex items-center gap-2">
             <InputGroupButton variant="secondary" asChild>
               <ImageInput setUploadedImage={setUploadedImage} />
@@ -62,22 +96,7 @@ export function CreatePostForm() {
                 createPostMutation.isPending
               }
               className="cursor-pointer"
-              onClick={() =>
-                createPostMutation.mutate(
-                  {
-                    content: {
-                      text: textContent,
-                      image: null,
-                    },
-                  },
-                  {
-                    onSuccess: () => {
-                      setTextContent("");
-                      setUploadedImage(null);
-                    },
-                  },
-                )
-              }
+              onClick={handleCreatePostSubmit}
             >
               <SendIcon />
             </InputGroupButton>

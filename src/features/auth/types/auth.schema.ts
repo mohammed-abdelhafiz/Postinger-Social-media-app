@@ -22,6 +22,11 @@ export const registerSchema = z.object({
       /[!@#$:%^&*]/,
       "Password must contain at least one special character",
     ),
+  bio: z
+    .string()
+    .trim()
+    .max(160, "Bio must be at most 160 characters")
+    .optional(),
 });
 
 export type RegisterData = z.infer<typeof registerSchema>;

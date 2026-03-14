@@ -1,15 +1,20 @@
+import { User } from "@/types";
+
 export interface Post {
   _id: string;
-  userId: string;
+  author: User;
   content: {
-    text: string;
-    image: string | null;
+    imageUrl?: string;
+    text?: string;
+    _id: string;
   };
+  comments: [];
+  likes: [];
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface UploadedImage {
   file: File;
-  src: string;
-  alt: string;
+  preview: string;
 }

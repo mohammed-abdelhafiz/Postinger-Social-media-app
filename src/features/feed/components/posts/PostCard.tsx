@@ -47,10 +47,12 @@ export default function PostCard({ post }: PostCardProps) {
             <div className="shrink-0">
               <Avatar>
                 <AvatarImage
-                  src={"https://github.com/shadcn.png"}
-                  alt={"post.authorName"}
+                  src={post.author.avatar}
+                  alt={post.author.username}
                 />
-                <AvatarFallback>{"post.authorName.charAt(0)"}</AvatarFallback>
+                <AvatarFallback>
+                  {post.author.username?.charAt(0)}
+                </AvatarFallback>
               </Avatar>
             </div>
 
@@ -59,7 +61,7 @@ export default function PostCard({ post }: PostCardProps) {
                 <div className="flex flex-col">
                   <div className="flex items-center">
                     <span className="cursor-pointer font-semibold hover:underline">
-                      {"Mohamed Ali"}
+                      {post.author.name}
                     </span>
                     <Dot className="h-4 w-4" />
                     <span className="text-sm text-muted-foreground">
@@ -67,7 +69,7 @@ export default function PostCard({ post }: PostCardProps) {
                     </span>
                   </div>
                   <span className="text-xs text-muted-foreground">
-                    @{"moali22"}
+                    @{post.author.username}
                   </span>
                 </div>
                 <PostCardActions />
@@ -76,10 +78,10 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
           <p className="m-2 text-sm">{post.content.text}</p>
 
-          {post.content.image && (
+          {post.content.imageUrl && (
             <div className="flex justify-center mt-4 overflow-hidden">
               <Image
-                src={post.content.image}
+                src={post.content.imageUrl}
                 alt="Post image"
                 width={380}
                 height={250}

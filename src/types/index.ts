@@ -5,3 +5,14 @@ export interface NavItem {
   href: string;
   icon?: React.ReactNode;
 }
+
+export interface User {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  avatar: string;
+  bio: string;
+  createdAt: string;
+  updatedAt: string;
+}

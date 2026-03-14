@@ -13,6 +13,7 @@ import { PasswordField } from "@/components/shared/password-field/PasswordField"
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useRegisterMutation } from "../../hooks/useRegisterMutation";
+import { TextareaField } from "@/components/shared/TextareaField";
 
 export const RegisterForm = () => {
   const { control, handleSubmit } = useForm<RegisterData>({
@@ -22,6 +23,7 @@ export const RegisterForm = () => {
       username: "",
       email: "",
       password: "",
+      bio: "",
     },
   });
 
@@ -53,7 +55,6 @@ export const RegisterForm = () => {
             placeholder="john_doe"
           />
         </div>
-
         <InputField
           control={control}
           name="email"
@@ -66,6 +67,12 @@ export const RegisterForm = () => {
           name="password"
           label="Password"
           placeholder="••••••••"
+        />
+        <TextareaField
+          control={control}
+          name="bio"
+          label="Bio"
+          placeholder="Tell us about yourself"
         />
       </FieldGroup>
       <Button

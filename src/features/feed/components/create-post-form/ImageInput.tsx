@@ -20,8 +20,7 @@ export const ImageInput = ({
 
     setUploadedImage({
       file,
-      src: url,
-      alt: file.name,
+      preview: url,
     });
     e.target.value = "";
   };
@@ -35,6 +34,7 @@ export const ImageInput = ({
     >
       <Input
         id="image"
+        name="image"
         type="file"
         hidden
         ref={imageInputRef}

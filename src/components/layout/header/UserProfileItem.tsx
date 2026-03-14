@@ -20,19 +20,21 @@ import { useLogoutMutation } from "@/features/auth/hooks/useLogoutMutation";
 import { useToggleTheme } from "@/hooks/useToggleTheme";
 import { useTheme } from "next-themes";
 import { Theme } from "@/types";
+import { useAuthStore } from "@/store/authStore";
 
 export function UserProfileItem() {
   const logoutMutation = useLogoutMutation();
   const { theme, setTheme } = useTheme();
   const toggleTheme = useToggleTheme(setTheme);
+  const user = useAuthStore((s) => s.user);
 
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="size-8">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={user?.avatar} />
+            <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -42,15 +44,15 @@ export function UserProfileItem() {
         >
           <div className="flex items-center gap-3 px-1 pt-1.5">
             <Avatar className="size-8">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={user?.avatar} />
+              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <span className="text-foreground text-sm font-medium">
-                shadcn
+                {user?.name}
               </span>
               <span className="text-muted-foreground text-xs">
-                ui@shadcn.com
+                {user?.email}
               </span>
             </div>
           </div>

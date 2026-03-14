@@ -8,7 +8,7 @@ export const useCreatePostMutation = () => {
   return useMutation({
     mutationFn: createPost,
 
-    onSuccess: ({ message }) => {
+    onSuccess: ({ message,newPost }) => {
       toast.success(message);
       queryclient.invalidateQueries({ queryKey: ["posts"] });
     },
