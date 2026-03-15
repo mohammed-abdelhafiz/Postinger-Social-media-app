@@ -53,18 +53,20 @@ export function Notifications() {
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon" className="relative">
-            <BellIcon aria-hidden="true" />
-            <Badge
-              variant="destructive"
-              className="absolute -top-1.5 -right-2 rounded-full px-1"
-              aria-hidden="true"
-            >
-              8
-            </Badge>
-          </Button>
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger
+          render={
+            <Button variant="outline" size="icon" className="relative">
+              <BellIcon aria-hidden="true" />
+              <Badge
+                variant="destructive"
+                className="absolute -top-1.5 -right-2 rounded-full px-1"
+                aria-hidden="true"
+              >
+                8
+              </Badge>
+            </Button>
+          }
+        />
         <DropdownMenuContent className="w-80" align="end" sideOffset={8}>
           <DropdownMenuGroup>
             <DropdownMenuLabel className="flex items-center justify-between">

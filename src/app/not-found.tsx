@@ -23,12 +23,17 @@ export default function NotFoundPage() {
           </EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <Button asChild className="w-1/2 mx-auto">
-            <Link href="/">
-              <HomeIcon data-icon="inline-start" />
-              Go Home
-            </Link>
-          </Button>
+          <Button
+            render={
+              <Link href="/">
+                <HomeIcon data-icon="inline-start" />
+                Go Home
+              </Link>
+
+            }
+            nativeButton={false}
+            className="w-1/2 mx-auto"
+          />
         </EmptyContent>
       </Empty>
     </div>

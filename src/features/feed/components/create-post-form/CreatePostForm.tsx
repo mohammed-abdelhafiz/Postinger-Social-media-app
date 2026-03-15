@@ -1,11 +1,4 @@
 "use client";
-import { Field } from "@/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupTextarea,
-} from "@/components/ui/input-group";
 import { SendIcon } from "lucide-react";
 import EmojiSelector from "./EmojiSelector";
 import { ImageInput } from "./ImageInput";
@@ -17,6 +10,8 @@ import { ImagePreview } from "./ImagesPreview";
 import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
 import { AxiosProgressEvent } from "axios";
 import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 export function CreatePostForm() {
   const user = useAuthStore((s) => s.user);
@@ -64,45 +59,40 @@ export function CreatePostForm() {
   };
 
   return (
-    <Field className="w-full mx-auto">
-      <InputGroup className="bg-background rounded-none! rounded-t!">
-        <InputGroupTextarea
-          placeholder={`What's on your mind${user ? `, ${user.username}` : ""}?`}
-          className="min-h-16 border-none py-3 shadow-none focus-visible:ring-0 wrap-anywhere max-h-16 overflow-y-auto font-semibold "
-          ref={textareaRef}
-          value={textContent}
-          onChange={(e) => setTextContent(e.target.value)}
-          disabled={createPostMutation.isPending}
-        />
+    <div className="w-full mx-auto flex flex-col bg-card p-2 border border-foreground/10 shadow-sm">
+      <Textarea
+        placeholder={`What's on your mind${user ? `, ${user.username}` : ""}?`}
+        className="min-h-16 border-none bg-transparent! py-3 focus-visible:ring-0 wrap-anywhere max-h-16 overflow-y-auto resize-none"
+        ref={textareaRef}
+        value={textContent}
+        onChange={(e) => setTextContent(e.target.value)}
+        disabled={createPostMutation.isPending}
+        maxLength={500}
+      />
+      <ImagePreview
+        isUploading={createPostMutation.isPending}
+        uploadedImage={uploadedImage}
+        setUploadedImage={setUploadedImage}
+      />
 
-        <ImagePreview
-          isUploading={createPostMutation.isPending}
-          uploadedImage={uploadedImage}
-          setUploadedImage={setUploadedImage}
-        />
-
-        <InputGroupAddon align="block-end" className="px-3 pb-3">
-          <EmojiSelector textareaRef={textareaRef} />
-          {progress > 0 && <Progress value={progress} />}
-          <div className="ml-auto flex items-center gap-2">
-            <InputGroupButton variant="secondary" asChild>
-              <ImageInput setUploadedImage={setUploadedImage} />
-            </InputGroupButton>
-            <InputGroupButton
-              variant="default"
-              size="icon-sm"
-              disabled={
-                (!textContent.trim() && !uploadedImage) ||
-                createPostMutation.isPending
-              }
-              className="cursor-pointer"
-              onClick={handleCreatePostSubmit}
-            >
-              <SendIcon />
-            </InputGroupButton>
-          </div>
-        </InputGroupAddon>
-      </InputGroup>
-    </Field>
+      <div className="flex items-center">
+        <EmojiSelector setTextContent={setTextContent} />
+        {progress > 0 && <Progress value={progress} className="flex-1" />}
+        <div className="flex items-center ml-auto">
+          <ImageInput setUploadedImage={setUploadedImage} />
+          <Button
+            size="icon-xs"
+            disabled={
+              (!textContent.trim() && !uploadedImage) ||
+              createPostMutation.isPending
+            }
+            className="cursor-pointer"
+            onClick={handleCreatePostSubmit}
+          >
+            <SendIcon />
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }

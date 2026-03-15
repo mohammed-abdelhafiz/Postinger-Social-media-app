@@ -17,15 +17,20 @@ export function Nav() {
       <Tabs value={pathname}>
         <TabsList className="w-full">
           {navItems.map((item) => (
-            <TabsTrigger key={item.name} value={item.href}>
-              <Link
-                href={item.href}
-                className="flex items-center gap-2 w-full justify-center"
-              >
-                {item.icon}
-                {item.name}
-              </Link>
-            </TabsTrigger>
+            <TabsTrigger
+              key={item.name}
+              value={item.href}
+              render={
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-2 w-full justify-center"
+                >
+                  {item.icon}
+                  {item.name}
+                </Link>
+              }
+              nativeButton={false}
+            />
           ))}
         </TabsList>
       </Tabs>

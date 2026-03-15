@@ -31,12 +31,15 @@ export function UserProfileItem() {
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar className="size-8">
-            <AvatarImage src={user?.avatar} />
-            <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger
+          render={
+            <Avatar className="size-8">
+              <AvatarImage src={user?.avatar} />
+              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+            </Avatar>
+          }
+          nativeButton={false}
+        />
         <DropdownMenuContent
           className="w-60 hidden md:block"
           align="start"

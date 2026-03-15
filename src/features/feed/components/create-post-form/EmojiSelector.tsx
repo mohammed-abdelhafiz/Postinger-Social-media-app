@@ -17,26 +17,26 @@ import {
 import { SmileIcon } from "lucide-react";
 
 interface EmojiSelectorProps {
-  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+  setTextContent: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function EmojiSelector({ textareaRef }: EmojiSelectorProps) {
+export default function EmojiSelector({ setTextContent }: EmojiSelectorProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <Popover onOpenChange={setIsOpen} open={isOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="ghost" className="cursor-pointer">
-          <SmileIcon />
-        </Button>
-      </PopoverTrigger>
+      <PopoverTrigger
+        render={
+          <Button variant="ghost" className="cursor-pointer" size="icon-sm">
+            <SmileIcon />
+          </Button>
+        }
+      />
       <PopoverContent className="w-fit p-0">
         <EmojiPicker
           className="h-[342px]"
           onEmojiSelect={({ emoji }) => {
-            if (textareaRef.current) {
-              textareaRef.current.value += emoji;
-            }
+            setTextContent((prev) => prev + emoji);
           }}
         >
           <EmojiPickerSearch />

@@ -19,11 +19,13 @@ export function PostCardActions() {
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon">
-            <EllipsisVerticalIcon aria-hidden="true" />
-          </Button>
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger
+          render={
+            <Button variant="outline" size="icon" onClick={(e) => e.stopPropagation()}>
+              <EllipsisVerticalIcon aria-hidden="true" />
+            </Button>
+          }
+        />
         <DropdownMenuContent className="w-48" align="end">
           <DropdownMenuGroup>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>

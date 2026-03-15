@@ -16,23 +16,32 @@ export function ThemeToggle() {
   return (
     <Tabs value={resolvedTheme} className="basis-1/2">
       <TabsList className="w-full">
-        <TabsTrigger value="light" asChild>
-          <Button variant="ghost" onClick={(e) => toggleTheme("light", e)}>
-            <SunIcon className="size-4" />
-          </Button>
-        </TabsTrigger>
+        <TabsTrigger
+          value="light"
+          render={
+            <Button variant="ghost" onClick={(e) => toggleTheme("light", e)}>
+              <SunIcon className="size-4" />
+            </Button>
+          }
+        />
 
-        <TabsTrigger value="dark" asChild>
-          <Button variant="ghost" onClick={(e) => toggleTheme("dark", e)}>
-            <MoonIcon className="size-4" />
-          </Button>
-        </TabsTrigger>
+        <TabsTrigger
+          value="dark"
+          render={
+            <Button variant="ghost" onClick={(e) => toggleTheme("dark", e)}>
+              <MoonIcon className="size-4" />
+            </Button>
+          }
+        />
 
-        <TabsTrigger value="system" asChild>
-          <Button variant="ghost" onClick={(e) => toggleTheme("system", e)}>
-            <MonitorIcon className="size-4" />
-          </Button>
-        </TabsTrigger>
+        <TabsTrigger
+          value="system"
+          render={
+            <Button variant="ghost" onClick={(e) => toggleTheme("system", e)}>
+              <MonitorIcon className="size-4" />
+            </Button>
+          }
+        />
       </TabsList>
     </Tabs>
   );

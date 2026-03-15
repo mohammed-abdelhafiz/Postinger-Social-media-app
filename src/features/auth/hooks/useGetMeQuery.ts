@@ -14,7 +14,7 @@ export function useGetMeQuery(options?: { enabled: boolean }) {
 
   useEffect(() => {
     if (meQuery.isSuccess && meQuery.data) {
-      setUser(meQuery.data.user);
+      setUser(meQuery.data);
     }
   }, [meQuery.data, meQuery.isSuccess, setUser]);
 

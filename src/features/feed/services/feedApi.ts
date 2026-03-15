@@ -1,8 +1,10 @@
 import api from "@/lib/api";
 import { AxiosProgressEvent } from "axios";
 
-export async function getAllPosts() {
-  const res = await api.get("/posts");
+export async function getPosts(activeTab?: string) {
+  const res = await api.get(
+    `/posts${activeTab ? `?filter=${activeTab}` : ""}`,
+  );
   return res.data;
 }
 

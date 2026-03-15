@@ -7,6 +7,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { useNewPostInputStore } from "@/store/newPostInput";
+import { useRouter } from "next/navigation";
 
 function BoardIllustration() {
   return (
@@ -107,8 +108,9 @@ function BoardIllustration() {
   );
 }
 
-export function NoPostsYet() {
+export function NoPostsYet({ activeTab }: { activeTab: string }) {
   const focusInput = useNewPostInputStore((s) => s.focus);
+  const router = useRouter();
   return (
     <div className="flex items-center justify-center p-4">
       <Empty className="py-12">
@@ -116,12 +118,26 @@ export function NoPostsYet() {
           <EmptyMedia>
             <BoardIllustration />
           </EmptyMedia>
-          <EmptyTitle>Be the first to share a thought</EmptyTitle>
+          <EmptyTitle>
+            {activeTab === "for-you"
+              ? "No posts yet"
+              : "No Following Posts"}
+          </EmptyTitle>
           <EmptyDescription>
-            Start the conversation by being the first to post.
+            {activeTab === "for-you"
+              ? "No posts yet"
+              : "Follow some people to see their posts"}
           </EmptyDescription>
-          <Button className="mt-2 cursor-pointer" onClick={focusInput}>
-            Post your first thought
+          <Button className="mt-2 cursor-pointer" onClick={() => {
+            if(activeTab === "for-you") {
+              focusInput();
+            } else {
+              router.push("/explore");
+            }
+          }}>
+            {activeTab === "for-you"
+              ? "Post your first thought"
+              : "Follow some people"}
           </Button>
         </EmptyHeader>
       </Empty>

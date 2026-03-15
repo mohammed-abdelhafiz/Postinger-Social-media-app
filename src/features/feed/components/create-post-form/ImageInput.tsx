@@ -28,9 +28,10 @@ export const ImageInput = ({
   return (
     <Button
       variant="ghost"
-      onClick={() => imageInputRef.current?.click()}
-      className="cursor-pointer"
+      size="icon-sm"
       aria-label="Upload image"
+      className="cursor-pointer text-muted-foreground"
+      onClick={() => imageInputRef.current?.click()}
     >
       <Input
         id="image"
@@ -41,7 +42,7 @@ export const ImageInput = ({
         onChange={handleImageChange}
         accept="image/*"
       />
-      <ImageIcon className="text-muted-foreground cursor-pointer" />
+      <ImageIcon />
     </Button>
   );
 };

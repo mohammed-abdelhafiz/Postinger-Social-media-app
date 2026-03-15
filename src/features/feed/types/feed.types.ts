@@ -4,9 +4,11 @@ export interface Post {
   _id: string;
   author: User;
   content: {
-    imageUrl?: string;
+    image?: {
+      url: string;
+      publicId: string;
+    };
     text?: string;
-    _id: string;
   };
   comments: [];
   likes: [];

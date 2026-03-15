@@ -9,7 +9,7 @@ export const useInitAuth = () => {
   });
 
   useGetMeQuery({
-    enabled: refreshMutation.isSuccess,
+    enabled: refreshMutation.isSuccess && !!refreshMutation.data?.accessToken,
   });
 
   useEffect(() => {
