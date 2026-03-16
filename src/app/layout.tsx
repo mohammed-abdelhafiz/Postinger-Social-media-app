@@ -5,7 +5,6 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { AuthProvider } from "@/providers/AuthProvider";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -30,10 +29,8 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <ReactQueryProvider>
-              <AuthProvider>
-                <main className="min-h-screen">{children}</main>
-                <Toaster richColors />
-              </AuthProvider>
+              <main className="min-h-screen">{children}</main>
+              <Toaster richColors />
             </ReactQueryProvider>
           </TooltipProvider>
         </ThemeProvider>

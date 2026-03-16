@@ -1,35 +1,38 @@
 "use client";
 
 import { Dot } from "lucide-react";
-import { cn, timeAgo } from "@/lib/utils";
-import Link from "next/link";
+import { timeAgo } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PostCardActions } from "./PostCardActions";
-import { Post } from "../../types/feed.types";
+import { Post } from "../../../types/feed.types";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { useGetMeQuery } from "@/features/auth/hooks/useGetMeQuery";
+import { LikeButton } from "./LikeButton";
+import { CommentButton } from "./comment/CommentButton";
 
 interface PostCardProps {
   post: Post;
 }
 
 export default function PostCard({ post }: PostCardProps) {
-  const router = useRouter();
+  const { data: user } = useGetMeQuery();
   return (
-    <Card className="w-full bg-linear-to-br from-background/5 to-background/2
+    <Card
+      className="w-full bg-linear-to-br from-background/5 to-background/2
      border border-foreground/10
      shadow-sm
-    ">
+    "
+    >
       <CardHeader className="flex gap-3">
         <Avatar className="shrink-0">
-          <AvatarImage
-            src={post.author.avatar}
-            alt={post.author.username}
-          />
-          <AvatarFallback>
-            {post.author.username?.charAt(0)}
-          </AvatarFallback>
+          <AvatarImage src={post.author.avatar} alt={post.author.username} />
+          <AvatarFallback>{post.author.username?.charAt(0)}</AvatarFallback>
         </Avatar>
 
         <div className="flex items-start justify-between flex-1">
@@ -47,24 +50,35 @@ export default function PostCard({ post }: PostCardProps) {
               @{post.author.username}
             </span>
           </div>
-          <PostCardActions />
+          {post.author._id === user?._id && <PostCardActions post={post} />}
         </div>
       </CardHeader>
-      <CardContent
-        className="flex flex-col gap-2 pl-14"
-      >
+      <CardContent className="flex flex-col gap-2 pl-14">
         <p className="text-sm">{post.content.text}</p>
-
         {post.content.image && (
           <Image
             src={post.content.image.url}
-            alt="Post image"
+            alt={`Image shared by ${post.author.name}`}
             className="rounded"
             width={450}
             height={350}
           />
         )}
       </CardContent>
+      <CardFooter className="flex items-center justify-between">
+        <div className="flex items-center">
+          <LikeButton post={post} />
+          <CommentButton post={post} />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">
+            {post.likes.length} likes
+          </span>
+          <span className="text-sm text-muted-foreground">
+            {post.comments.length} comments
+          </span>
+        </div>
+      </CardFooter>
     </Card>
   );
 }

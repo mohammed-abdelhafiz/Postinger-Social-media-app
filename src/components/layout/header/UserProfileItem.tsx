@@ -20,13 +20,13 @@ import { useLogoutMutation } from "@/features/auth/hooks/useLogoutMutation";
 import { useToggleTheme } from "@/hooks/useToggleTheme";
 import { useTheme } from "next-themes";
 import { Theme } from "@/types";
-import { useAuthStore } from "@/store/authStore";
+import { useGetMeQuery } from "@/features/auth/hooks/useGetMeQuery";
 
 export function UserProfileItem() {
   const logoutMutation = useLogoutMutation();
   const { theme, setTheme } = useTheme();
   const toggleTheme = useToggleTheme(setTheme);
-  const user = useAuthStore((s) => s.user);
+  const { data: user } = useGetMeQuery();
 
   return (
     <div className="flex items-center justify-center">

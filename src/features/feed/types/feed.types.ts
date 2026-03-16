@@ -4,16 +4,27 @@ export interface Post {
   _id: string;
   author: User;
   content: {
-    image?: {
+    image: {
       url: string;
       publicId: string;
-    };
-    text?: string;
+    } | null;
+    text: string;
   };
-  comments: [];
-  likes: [];
+  comments: Comment[];
+  likes: User[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Comment {
+  _id: string;
+  postId: string;
+    author: User;
+    content: string;
+    likes: User[];
+    createdAt: string;
+    updatedAt: string;
+
 }
 
 export interface UploadedImage {

@@ -17,10 +17,10 @@ import {
 import { SmileIcon } from "lucide-react";
 
 interface EmojiSelectorProps {
-  setTextContent: React.Dispatch<React.SetStateAction<string>>;
+  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function EmojiSelector({ setTextContent }: EmojiSelectorProps) {
+export default function EmojiSelector({ setText }: EmojiSelectorProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -36,7 +36,7 @@ export default function EmojiSelector({ setTextContent }: EmojiSelectorProps) {
         <EmojiPicker
           className="h-[342px]"
           onEmojiSelect={({ emoji }) => {
-            setTextContent((prev) => prev + emoji);
+            setText((prev) => prev + emoji);
           }}
         >
           <EmojiPickerSearch />

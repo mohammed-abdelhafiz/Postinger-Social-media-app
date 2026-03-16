@@ -2,22 +2,25 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(req: NextRequest) {
+  const accessToken = req.cookies.get("accessToken")?.value;
   const refreshToken = req.cookies.get("refreshToken")?.value;
+  const isAuthenticated = !!accessToken || !!refreshToken;
 
   const { pathname } = req.nextUrl;
 
-  if (
+  const authPages =
     pathname === "/login" ||
     pathname === "/register" ||
-    pathname.startsWith("/reset-password")
-  ) {
-    if (refreshToken) {
+    pathname.startsWith("/reset-password");
+
+  if (authPages) {
+    if (isAuthenticated) {
       return NextResponse.redirect(new URL("/", req.url));
     }
     return NextResponse.next();
   }
 
-  if (!refreshToken) {
+  if (!isAuthenticated) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
@@ -25,5 +28,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|favicon.ico|public|api).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon\\.ico$|public/|api/).*)"]
 };

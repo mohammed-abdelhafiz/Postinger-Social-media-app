@@ -9,7 +9,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useLogoutMutation } from "@/features/auth/hooks/useLogoutMutation";
-import { useAuthStore } from "@/store/authStore";
 import { MailCheckIcon } from "lucide-react";
 import UserCardSkeleton from "./UserCardSkeleton";
 import { useGetMeQuery } from "@/features/auth/hooks/useGetMeQuery";

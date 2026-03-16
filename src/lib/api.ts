@@ -1,18 +1,12 @@
 import axios from "axios";
 import { ApiError } from "./apiError";
-import { useAuthStore } from "@/store/authStore";
 import { refreshToken } from "@/features/auth/services/authApi";
 
 const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_APP_URL}/api`,
 });
 
-api.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().accessToken;
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
-
+let refreshPromise: Promise<void> | null = null;
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -25,9 +19,11 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const { accessToken } = await refreshToken();
-        useAuthStore.getState().setAccessToken(accessToken);
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        if (!refreshPromise) {
+          refreshPromise = refreshToken();
+        }
+        await refreshPromise;
+        refreshPromise = null;
         return api(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);

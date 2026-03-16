@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import PostCard from "./PostCard";
+import PostCard from "./post/PostCard";
 import { Post } from "../../types/feed.types";
 import { useGetPostsQuery } from "../../hooks/useGetPostsQuery";
 import { NoPostsYet } from "./NoPostsYet";
