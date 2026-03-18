@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -62,7 +62,15 @@ export function SuggestionsCard() {
                       {suggestion.username}
                     </p>
                   </div>
-                  <Button variant="default" className="cursor-pointer">
+                  <Button
+                    variant="default"
+                    className="cursor-pointer"
+                    aria-label={`Follow ${suggestion.name}`}
+                    onClick={() => {
+                      // TODO: Implement follow functionality
+                      console.log(`Follow ${suggestion.username}`);
+                    }}
+                  >
                     Follow
                   </Button>
                 </div>

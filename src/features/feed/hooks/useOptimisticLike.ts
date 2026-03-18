@@ -26,10 +26,11 @@ export const useOptimisticLike = <T>({
       const prevData = queryClient.getQueryData(queryKey);
 
       queryClient.setQueryData(queryKey, (oldData: any) => {
-        if (!oldData) return oldData;
+        if (!oldData?.pages) return oldData;
         return {
           ...oldData,
           pages: oldData.pages.map((page: any) => {
+            if (!page?.data) return page;
             return {
               ...page,
               data: page.data.map((item: any) =>
@@ -51,7 +52,6 @@ export const useOptimisticLike = <T>({
           }),
         };
       });
-
       return { prevData };
     },
     onError: (error, _vars, context) => {

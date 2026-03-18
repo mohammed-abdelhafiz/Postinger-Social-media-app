@@ -8,10 +8,13 @@ interface LikeCardProps {
 
 export const LikeCard = ({ like }: LikeCardProps) => {
   return (
-    <Link href={`/profile/${like._id}`} className="flex items-center gap-2 group">
+    <Link
+      href={`/profile/${like._id}`}
+      className="flex items-center gap-2 group"
+    >
       <Avatar>
         <AvatarImage src={like.avatar} />
-        <AvatarFallback>{like.name[0]}</AvatarFallback>
+        <AvatarFallback>{like.name?.[0] ?? "?"}</AvatarFallback>
       </Avatar>
       <div className="flex-1">
         <p className="font-semibold">{like.name}</p>

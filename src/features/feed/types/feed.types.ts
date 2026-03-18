@@ -14,7 +14,7 @@ export interface Post {
   updatedAt: string;
   likesCount: number;
   commentsCount: number;
-  likedByCurrentUser: boolean;
+  likedByAuthenticatedUser: boolean;
 }
 
 export interface Comment {
@@ -23,12 +23,11 @@ export interface Comment {
   postId: string;
   content: string;
   likedBy: User[];
-  likedByCurrentUser: boolean;
+  likedByAuthenticatedUser: boolean;
   likesCount: number;
   createdAt: string;
   updatedAt: string;
 }
-
 
 export interface UploadedImage {
   file: File;

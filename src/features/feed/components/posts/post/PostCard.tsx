@@ -34,7 +34,7 @@ export default function PostCard({ priority = false }: PostCardProps) {
     queryKey: ["posts", activeTab],
     id: post._id,
     field: "likesCount",
-    toggleField: "likedByCurrentUser",
+    toggleField: "likedByAuthenticatedUser",
     mutationFn: () => likePost(post._id),
   });
   const handleLike = () => {
@@ -91,7 +91,7 @@ export default function PostCard({ priority = false }: PostCardProps) {
       <CardFooter className="flex items-center justify-between pr-0.5">
         <div className="flex items-center">
           <LikeButton
-            isLiked={post.likedByCurrentUser}
+            isLiked={post.likedByAuthenticatedUser}
             handleLike={handleLike}
             disabled={likePostMutation.isPending}
           />
@@ -106,8 +106,9 @@ export default function PostCard({ priority = false }: PostCardProps) {
             size="xs"
             className="text-sm text-muted-foreground"
             onClick={() => setIsPostLikesDialogOpen(true)}
+            disabled={post.likesCount === 0}
           >
-            {post.likesCount} likes
+            {post.likesCount} {post.likesCount === 1 ? "like" : "likes"}
           </Button>
           <LikesDialog
             isOpen={isPostLikesDialogOpen}

@@ -9,14 +9,12 @@ import { getPostLikes } from "@/features/feed/services/feedApi";
 
 export const PostLikesDialogContent = () => {
   const { post } = usePostContext();
-  
+
   return (
     <>
       <DialogHeader>
         <DialogTitle>Likes</DialogTitle>
-        <DialogDescription>
-          {post?.likesCount} likes
-        </DialogDescription>
+        <DialogDescription>{post.likesCount} likes</DialogDescription>
       </DialogHeader>
       <LikesList
         queryKey={["post-likes", post._id]}

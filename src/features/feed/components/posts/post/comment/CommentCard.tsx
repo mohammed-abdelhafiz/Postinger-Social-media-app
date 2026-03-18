@@ -18,10 +18,10 @@ export const CommentCard = () => {
     queryKey: ["comments", comment.postId],
     id: comment._id,
     field: "likesCount",
-    toggleField: "likedByCurrentUser",
+    toggleField: "likedByAuthenticatedUser",
     mutationFn: () => likeComment(comment._id),
   });
-  const isLiked = comment.likedByCurrentUser;
+  const isLiked = comment.likedByAuthenticatedUser;
   const [isCommentLikesDialogOpen, setIsCommentLikesDialogOpen] =
     useState(false);
   return (
@@ -57,8 +57,9 @@ export const CommentCard = () => {
           variant="link"
           className="text-sm text-muted-foreground"
           onClick={() => setIsCommentLikesDialogOpen(true)}
+          disabled={comment.likesCount === 0}
         >
-          {comment.likesCount} likes
+          {comment.likesCount} {comment.likesCount === 1 ? "like" : "likes"}
         </Button>
         <LikesDialog
           isOpen={isCommentLikesDialogOpen}

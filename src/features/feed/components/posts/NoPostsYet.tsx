@@ -123,9 +123,9 @@ export function NoPostsYet({ activeTab }: { activeTab: string }) {
           </EmptyTitle>
           <EmptyDescription>
             {activeTab === "for-you"
-              ? "No posts yet"
+              ? "Be the first to share something"
               : "Follow some people to see their posts"}
-          </EmptyDescription>
+          </EmptyDescription>{" "}
           <Button
             className="mt-2 cursor-pointer"
             onClick={() => {

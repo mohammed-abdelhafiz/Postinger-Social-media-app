@@ -1,12 +1,13 @@
+import { RefObject } from "react";
 import { create } from "zustand";
 
 interface FeedStore {
   activeTab: string;
   setActiveTab: (tab: string) => void;
 
-  newPostInputRef: React.RefObject<HTMLTextAreaElement | null> | null;
+  newPostInputRef: RefObject<HTMLTextAreaElement | null> | null;
   setNewPostInputRef: (
-    ref: React.RefObject<HTMLTextAreaElement | null>
+    ref: RefObject<HTMLTextAreaElement | null>
   ) => void;
 
   focusNewPostInputRef: () => void;

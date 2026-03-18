@@ -62,7 +62,7 @@ export function CreatePostForm() {
   return (
     <div className="w-full mx-auto flex flex-col bg-card p-2 border border-foreground/10 shadow-sm">
       <Textarea
-        placeholder={`What's on your mind${user ? `, ${user.name.split(" ")[0]}` : ""}?`}
+        placeholder={`What's on your mind${user?.name ? `, ${user.name.split(" ")[0]}` : ""}?`}
         className="min-h-16 border-none bg-transparent! py-3 focus-visible:ring-0 wrap-anywhere max-h-16 overflow-y-auto resize-none"
         ref={textareaRef}
         value={text}

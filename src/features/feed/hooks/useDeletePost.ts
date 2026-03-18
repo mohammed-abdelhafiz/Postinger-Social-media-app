@@ -20,14 +20,10 @@ export const useDeletePost = () => {
         if (!oldData) return oldData;
         return {
           ...oldData,
-          pages: oldData.pages.map((page: any, index: number) =>
-            index === 0
-              ? {
-                  ...page,
-                  data: page.data.filter((post: Post) => post._id !== postId),
-                }
-              : page,
-          ),
+          pages: oldData.pages.map((page: any) => ({
+            ...page,
+            data: page.data.filter((post: Post) => post._id !== postId),
+          })),
         };
       });
 
@@ -43,7 +39,6 @@ export const useDeletePost = () => {
         toast.error(error.message);
       } else {
         toast.error("Unexpected error occurred");
-        console.log(error);
       }
     },
 

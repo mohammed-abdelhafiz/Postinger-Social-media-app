@@ -1,4 +1,3 @@
-import { Comment } from "@/features/feed/types/feed.types";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
@@ -15,7 +14,7 @@ export const EditCommentForm = ({ setIsOpen }: EditCommentFormProps) => {
   const { comment } = useCommentContext();
   const [content, setContent] = useState(comment.content);
   const editCommentMutation = useEditComment();
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       content === comment.content ||

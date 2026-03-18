@@ -45,7 +45,6 @@ export const useCreatePost = () => {
         toast.error(error.message);
       } else {
         toast.error("Unexpected error occurred");
-        console.log(error);
       }
     },
 
@@ -54,6 +53,15 @@ export const useCreatePost = () => {
     },
 
     onSettled: () => {
+      const currentData = queryClient.getQueryData(queryKey) as any;
+      if (currentData?.pages?.[0]?.data) {
+        const optimisticPost = currentData.pages[0].data.find((p: Post) =>
+          p._id.startsWith("temp-"),
+        );
+        if (optimisticPost?.content?.image?.url?.startsWith("blob:")) {
+          URL.revokeObjectURL(optimisticPost.content.image.url);
+        }
+      }
       queryClient.invalidateQueries({ queryKey, exact: true });
     },
   });
@@ -65,6 +73,10 @@ function createOptimisticPost(formData: FormData): Post {
   const imageUrl = newPostImage
     ? URL.createObjectURL(newPostImage as File)
     : "";
+  const user = useAuthStore.getState().user;
+  if (!user) {
+    throw new Error("User not found");
+  }
   const optimisticPost = {
     _id: `temp-${Date.now()}`,
     content: {
@@ -74,12 +86,12 @@ function createOptimisticPost(formData: FormData): Post {
         publicId: "",
       },
     },
-    author: useAuthStore.getState().user!,
+    author: user,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     likesCount: 0,
     commentsCount: 0,
-    likedByCurrentUser: false,
+    likedByAuthenticatedUser: false,
   };
   return optimisticPost;
 }

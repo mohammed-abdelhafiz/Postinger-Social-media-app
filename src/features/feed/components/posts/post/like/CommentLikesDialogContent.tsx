@@ -15,7 +15,7 @@ export const CommentLikesDialogContent = () => {
       <DialogHeader>
         <DialogTitle>Likes</DialogTitle>
         <DialogDescription>
-          {comment?.likesCount} likes
+          {comment.likesCount} likes
         </DialogDescription>
       </DialogHeader>
       <LikesList
