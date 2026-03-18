@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 
 interface LikeButtonProps {
   isLiked: boolean;
@@ -17,12 +17,12 @@ export const LikeButton = ({
       variant="ghost"
       size="icon-sm"
       className={`rounded-full cursor-pointer
-       hover:bg-red-500! hover:text-white transition-all
-        duration-300 ease-in-out ${isLiked ? "bg-red-500! text-white!" : ""}`}
+       hover:bg-primary! hover:text-white transition-all
+        duration-300 ease-in-out ${isLiked ? "bg-primary! text-white!" : ""}`}
       onClick={handleLike}
       disabled={disabled}
     >
-      <Heart size={18} />
+      <ThumbsUp size={18} />
     </Button>
   );
 };
