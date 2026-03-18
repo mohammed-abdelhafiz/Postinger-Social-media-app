@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -29,7 +30,9 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <ReactQueryProvider>
-              <main className="min-h-screen">{children}</main>
+              <AuthProvider>
+                <main className="min-h-screen">{children}</main>
+              </AuthProvider>
               <Toaster richColors />
             </ReactQueryProvider>
           </TooltipProvider>

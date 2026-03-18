@@ -8,16 +8,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TrashIcon, PencilIcon, EllipsisIcon } from "lucide-react";
-import { Comment } from "@/features/feed/types/feed.types";
 import { useState } from "react";
 import { DeleteCommentDialog } from "./DeleteCommentDialog";
 import { EditCommentDialog } from "./EditCommentDialog";
 
-interface CommentCardActionsProps {
-  comment: Comment;
-}
-
-export function CommentCardActions({ comment }: CommentCardActionsProps) {
+export function CommentCardActions() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   return (
@@ -57,11 +52,9 @@ export function CommentCardActions({ comment }: CommentCardActionsProps) {
       <EditCommentDialog
         open={isEditDialogOpen}
         setIsOpen={setIsEditDialogOpen}
-        comment={comment}
       />
 
       <DeleteCommentDialog
-        comment={comment}
         open={isDeleteDialogOpen}
         setIsOpen={setIsDeleteDialogOpen}
       />

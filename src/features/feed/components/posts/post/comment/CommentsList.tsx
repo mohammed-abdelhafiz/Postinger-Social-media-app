@@ -1,4 +1,3 @@
-import { useGetCommentsQuery } from "@/features/feed/hooks/useGetCommentsQuery";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { CommentCard } from "./CommentCard";
 import { Comment } from "@/features/feed/types/feed.types";
@@ -7,10 +6,18 @@ import { useEffect } from "react";
 import { CommentsError } from "./CommentsError";
 import { CommentsSkeleton } from "./CommentsSkeleton";
 
+import { usePostContext } from "@/features/feed/contexts/PostContext";
+import { CommentProvider } from "@/features/feed/contexts/CommentContext";
+import { useCustomInfiniteQuery } from "@/hooks/useCustomInfiniteQuery";
+import { getComments } from "@/features/feed/services/feedApi";
+
 interface CommentsListProps {
-  postId: string;
+  newCommentInputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
-export const CommentsList = ({ postId }: CommentsListProps) => {
+
+export const CommentsList = ({ newCommentInputRef }: CommentsListProps) => {
+  const { post } = usePostContext();
+  const postId = post._id;
   const {
     data,
     isLoading,
@@ -19,7 +26,11 @@ export const CommentsList = ({ postId }: CommentsListProps) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetCommentsQuery(postId);
+  } = useCustomInfiniteQuery({
+    queryKey: ["comments", postId],
+    queryFn: getComments,
+    extraParams: { postId },
+  });
 
   const { isIntersecting, ref } = useIntersectionObserver();
 
@@ -35,20 +46,22 @@ export const CommentsList = ({ postId }: CommentsListProps) => {
   if (isLoading) {
     return <CommentsSkeleton />;
   }
-  const comments = data?.pages.flatMap((page) => page) || [];
+  const comments = data?.pages.flatMap((page) => page.data) || [];
 
   return (
     <div className="no-scrollbar px-6 -mx-6 max-h-[50vh] overflow-y-auto space-y-6">
       {comments.length > 0 ? (
         <>
           {comments.map((comment: Comment) => (
-            <CommentCard key={comment._id} comment={comment} />
+            <CommentProvider key={comment._id} comment={comment}>
+              <CommentCard />
+            </CommentProvider>
           ))}
           {isFetchingNextPage && <CommentsSkeleton />}
           <div ref={ref} className="h-4 w-full" />
         </>
       ) : (
-        <NoComments />
+        <NoComments newCommentInputRef={newCommentInputRef} />
       )}
     </div>
   );

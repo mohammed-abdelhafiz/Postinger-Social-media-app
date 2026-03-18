@@ -7,17 +7,20 @@ import {
 } from "@/components/ui/empty";
 
 interface NoCommentsProps {
-  onAddComment?: () => void;
+  newCommentInputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
-export function NoComments({ onAddComment }: NoCommentsProps) {
+export function NoComments({ newCommentInputRef }: NoCommentsProps) {
+  const handleAddComment = () => {
+    newCommentInputRef.current?.focus();
+  };
   return (
     <div className="flex items-center justify-center p-4">
       <Empty className="py-12">
         <EmptyHeader>
           <EmptyTitle>No comments yet</EmptyTitle>
           <EmptyDescription>No comments yet</EmptyDescription>
-          <Button className="mt-2 cursor-pointer" onClick={onAddComment}>
+          <Button className="mt-2 cursor-pointer" onClick={handleAddComment}>
             Add your first comment
           </Button>
         </EmptyHeader>

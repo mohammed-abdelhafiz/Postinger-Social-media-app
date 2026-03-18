@@ -1,34 +1,30 @@
 import { Button } from "@/components/ui/button";
-import { Post } from "@/features/feed/types/feed.types";
-import {
-  MessageCircleMore,
-  MessageSquare,
-  MessageSquareMore,
-  Reply,
-} from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { CommentsDialog } from "./CommentsDialog";
-import { useState } from "react";
 
 interface CommentButtonProps {
-  post: Post;
+  isCommentsDialogOpen: boolean;
+  setIsCommentsDialogOpen: (open: boolean) => void;
 }
-export const CommentButton = ({ post }: CommentButtonProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+export const CommentButton = ({
+  isCommentsDialogOpen,
+  setIsCommentsDialogOpen,
+}: CommentButtonProps) => {
   return (
     <>
       <Button
         variant="ghost"
         size="icon-sm"
         className="rounded-full cursor-pointer"
-        onClick={() => setIsDialogOpen(true)}
+        onClick={() => setIsCommentsDialogOpen(true)}
         aria-label="Open comments"
       >
         <MessageSquare />
       </Button>{" "}
       <CommentsDialog
-        isOpen={isDialogOpen}
-        setIsOpen={setIsDialogOpen}
-        post={post}
+        isOpen={isCommentsDialogOpen}
+        setIsOpen={setIsCommentsDialogOpen}
       />
     </>
   );

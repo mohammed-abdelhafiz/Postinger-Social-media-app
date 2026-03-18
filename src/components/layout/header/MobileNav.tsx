@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { NavItem } from "@/types";
 import Link from "next/link";
 import { Home, MessageCircle, Bell, User, Settings } from "lucide-react";
-import { useLogoutMutation } from "@/features/auth/hooks/useLogoutMutation";
+import { useLogoutMutation } from "@/features/auth/hooks/useLogout";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 

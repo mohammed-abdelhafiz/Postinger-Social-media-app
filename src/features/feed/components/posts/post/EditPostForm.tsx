@@ -5,20 +5,21 @@ import {
   editPostFormSchema,
   EditPostFormValues,
 } from "@/features/feed/types/feed.schema";
-import { useEditPostMutation } from "@/features/feed/hooks/useEditPostMutation";
+import { useEditPost } from "@/features/feed/hooks/useEditPost";
 import { Post } from "@/features/feed/types/feed.types";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ImagePreview } from "../../create-post-form/ImagesPreview";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { usePostContext } from "@/features/feed/contexts/PostContext";
 
 interface EditPostFormProps {
-  post: Post;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export const EditPostForm = ({ post, setIsOpen }: EditPostFormProps) => {
+export const EditPostForm = ({ setIsOpen }: EditPostFormProps) => {
+  const { post } = usePostContext();
   const [previewUrl, setPreviewUrl] = useState<string | null>(
     post.content.image?.url || null,
   );
@@ -36,7 +37,7 @@ export const EditPostForm = ({ post, setIsOpen }: EditPostFormProps) => {
   const text = watch("text");
   const newImageFile = watch("newImageFile");
 
-  const editPostMutation = useEditPostMutation();
+  const editPostMutation = useEditPost();
 
   useEffect(() => {
     if (!newImageFile) return;

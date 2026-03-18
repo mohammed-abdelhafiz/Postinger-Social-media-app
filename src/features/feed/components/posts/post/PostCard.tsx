@@ -1,10 +1,9 @@
 "use client";
 
 import { Dot } from "lucide-react";
-import { timeAgo } from "@/lib/utils";
+import { timeAgo } from "@/lib/helperFuns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PostCardActions } from "./PostCardActions";
-import { Post } from "../../../types/feed.types";
 import Image from "next/image";
 import {
   Card,
@@ -12,16 +11,38 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { useGetMeQuery } from "@/features/auth/hooks/useGetMeQuery";
-import { LikeButton } from "./LikeButton";
+import { LikeButton } from "../../LikeButton";
 import { CommentButton } from "./comment/CommentButton";
+import { useAuthStore } from "@/store/auth.store";
+import { usePostContext } from "@/features/feed/contexts/PostContext";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { LikesDialog } from "./like/LikesDialog";
+import { useOptimisticLike } from "@/features/feed/hooks/useOptimisticLike";
+import { likePost } from "@/features/feed/services/feedApi";
+import { useFeedStore } from "@/store/feed.store";
 
 interface PostCardProps {
-  post: Post;
+  priority?: boolean;
 }
 
-export default function PostCard({ post }: PostCardProps) {
-  const { data: user } = useGetMeQuery();
+export default function PostCard({ priority = false }: PostCardProps) {
+  const user = useAuthStore((s) => s.user);
+  const { post } = usePostContext();
+  const activeTab = useFeedStore((s) => s.activeTab);
+  const likePostMutation = useOptimisticLike({
+    queryKey: ["posts", activeTab],
+    id: post._id,
+    field: "likesCount",
+    toggleField: "likedByCurrentUser",
+    mutationFn: () => likePost(post._id),
+  });
+  const handleLike = () => {
+    likePostMutation.mutate();
+  };
+  const [isCommentsDialogOpen, setIsCommentsDialogOpen] = useState(false);
+  const [isPostLikesDialogOpen, setIsPostLikesDialogOpen] = useState(false);
+
   return (
     <Card
       className="w-full bg-linear-to-br from-background/5 to-background/2
@@ -50,7 +71,7 @@ export default function PostCard({ post }: PostCardProps) {
               @{post.author.username}
             </span>
           </div>
-          {post.author._id === user?._id && <PostCardActions post={post} />}
+          {post.author._id === user?._id && <PostCardActions />}
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 pl-14">
@@ -59,24 +80,48 @@ export default function PostCard({ post }: PostCardProps) {
           <Image
             src={post.content.image.url}
             alt={`Image shared by ${post.author.name}`}
-            className="rounded"
+            className="rounded w-full"
             width={450}
             height={350}
+            style={{ height: "auto" }}
+            priority={priority}
           />
         )}
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
+      <CardFooter className="flex items-center justify-between pr-0.5">
         <div className="flex items-center">
-          <LikeButton post={post} />
-          <CommentButton post={post} />
+          <LikeButton
+            isLiked={post.likedByCurrentUser}
+            handleLike={handleLike}
+            disabled={likePostMutation.isPending}
+          />
+          <CommentButton
+            isCommentsDialogOpen={isCommentsDialogOpen}
+            setIsCommentsDialogOpen={setIsCommentsDialogOpen}
+          />
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
-            {post.likes.length} likes
-          </span>
-          <span className="text-sm text-muted-foreground">
-            {post.comments.length} comments
-          </span>
+        <div className="flex items-center">
+          <Button
+            variant="link"
+            size="xs"
+            className="text-sm text-muted-foreground"
+            onClick={() => setIsPostLikesDialogOpen(true)}
+          >
+            {post.likesCount} likes
+          </Button>
+          <LikesDialog
+            isOpen={isPostLikesDialogOpen}
+            setIsOpen={setIsPostLikesDialogOpen}
+            item="post"
+          />
+          <Button
+            variant="link"
+            size="xs"
+            className="text-sm text-muted-foreground"
+            onClick={() => setIsCommentsDialogOpen(true)}
+          >
+            {post.commentsCount} comments
+          </Button>
         </div>
       </CardFooter>
     </Card>

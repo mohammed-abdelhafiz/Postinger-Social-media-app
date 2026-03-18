@@ -1,14 +1,8 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useFeedStore } from "@/store/feed.store";
 
-interface PostsFilterTabsProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-}
-
-export function PostsFilterTabs({
-  activeTab,
-  setActiveTab,
-}: PostsFilterTabsProps) {
+export function PostsFilterTabs() {
+  const { activeTab, setActiveTab } = useFeedStore();
   return (
     <Tabs
       className="w-full sticky top-0 z-10"

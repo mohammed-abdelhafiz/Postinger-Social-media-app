@@ -3,20 +3,20 @@ import { SendIcon } from "lucide-react";
 import EmojiSelector from "./EmojiSelector";
 import { ImageInput } from "./ImageInput";
 import { useEffect, useRef, useState } from "react";
-import { useNewPostInputStore } from "@/store/newPostInput";
+import { useFeedStore } from "@/store/feed.store";
 import { UploadedImage } from "../../types/feed.types";
 import { ImagePreview } from "./ImagesPreview";
-import { useCreatePostMutation } from "../../hooks/useCreatePostMutation";
+import { useCreatePost } from "../../hooks/useCreatePost";
 import { AxiosProgressEvent } from "axios";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useGetMeQuery } from "@/features/auth/hooks/useGetMeQuery";
+import { useAuthStore } from "@/store/auth.store";
 
 export function CreatePostForm() {
-  const { data: user } = useGetMeQuery();
+  const user = useAuthStore((s) => s.user);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const setTextareaRef = useNewPostInputStore((s) => s.setTextareaRef);
+  const setNewPostInputRef = useFeedStore((s) => s.setNewPostInputRef);
 
   const [uploadedImage, setUploadedImage] = useState<UploadedImage | null>(
     null,
@@ -25,11 +25,11 @@ export function CreatePostForm() {
   const [text, setText] = useState("");
   const [progress, setProgress] = useState(0);
 
-  const createPostMutation = useCreatePostMutation();
+  const createPostMutation = useCreatePost();
 
   useEffect(() => {
-    setTextareaRef(textareaRef);
-  }, [setTextareaRef]);
+    setNewPostInputRef(textareaRef);
+  }, [setNewPostInputRef]);
 
   const handleCreatePostSubmit = () => {
     const formData = new FormData();
@@ -62,7 +62,7 @@ export function CreatePostForm() {
   return (
     <div className="w-full mx-auto flex flex-col bg-card p-2 border border-foreground/10 shadow-sm">
       <Textarea
-        placeholder={`What's on your mind${user ? `, ${user.username}` : ""}?`}
+        placeholder={`What's on your mind${user ? `, ${user.name.split(" ")[0]}` : ""}?`}
         className="min-h-16 border-none bg-transparent! py-3 focus-visible:ring-0 wrap-anywhere max-h-16 overflow-y-auto resize-none"
         ref={textareaRef}
         value={text}

@@ -1,23 +1,30 @@
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../services/authApi";
+import { logout } from "../services/authApi";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/apiError";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuthStore } from "@/store/auth.store";
 
-export const useLoginMutation = () => {
+export const useLogoutMutation = () => {
+
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore(s => s.setUser);
   return useMutation({
-    mutationFn: login,
+    mutationFn: logout,
+
     onSuccess: ({ message }) => {
+      queryClient.removeQueries({ queryKey: ["me"] });
+      setUser(null);
       toast.success(message);
-      router.replace("/");
+      router.replace("/login");
     },
 
     onError: (error) => {
       if (error instanceof ApiError) {
         toast.error(error.message);
       } else {
-        console.log(error);
         toast.error("Unexpected error occurred");
       }
     },

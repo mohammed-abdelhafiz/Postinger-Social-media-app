@@ -15,16 +15,14 @@ import {
   EllipsisVerticalIcon,
 } from "lucide-react";
 import { DeletePostDialog } from "./DeletePostDialog";
-import { Post } from "../../../types/feed.types";
 import { useState } from "react";
 import { EditPostDialog } from "./EditPostDialog";
 import { toast } from "sonner";
+import { usePostContext } from "@/features/feed/contexts/PostContext";
 
-interface PostCardActionsProps {
-  post: Post;
-}
 
-export function PostCardActions({ post }: PostCardActionsProps) {
+export function PostCardActions() {
+  const { post } = usePostContext();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const handleCopyLink = () => {
@@ -81,13 +79,11 @@ export function PostCardActions({ post }: PostCardActionsProps) {
       <EditPostDialog
         open={isEditDialogOpen}
         setIsOpen={setIsEditDialogOpen}
-        post={post}
       />
 
       <DeletePostDialog
         open={isDeleteDialogOpen}
         setIsOpen={setIsDeleteDialogOpen}
-        postId={post._id}
       />
     </div>
   );

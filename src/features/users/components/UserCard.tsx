@@ -8,17 +8,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useLogoutMutation } from "@/features/auth/hooks/useLogoutMutation";
+import { useLogoutMutation } from "@/features/auth/hooks/useLogout";
 import { MailCheckIcon } from "lucide-react";
 import UserCardSkeleton from "./UserCardSkeleton";
-import { useGetMeQuery } from "@/features/auth/hooks/useGetMeQuery";
+import { useAuthStore } from "@/store/auth.store";
 
 export const UserCard = () => {
-  const { data: user, isLoading, isError } = useGetMeQuery();
-
+  const user = useAuthStore((s) => s.user);
   const { mutate: logout, isPending: isLoggingOut } = useLogoutMutation();
 
-  if (isLoading || isError) {
+  if (!user) {
     return <UserCardSkeleton />;
   }
 

@@ -8,22 +8,21 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeleteCommentMutation } from "@/features/feed/hooks/useDeleteCommentMutation";
-import { Comment } from "@/features/feed/types/feed.types";
-import { AlertTriangleIcon } from "lucide-react";
+import { useCommentContext } from "@/features/feed/contexts/CommentContext";
+import { useDeleteComment } from "@/features/feed/hooks/useDeleteComment";
+ import { AlertTriangleIcon } from "lucide-react";
 
 interface DeleteCommentDialogProps {
-  comment: Comment;
   open: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
 export function DeleteCommentDialog({
-  comment,
   open,
   setIsOpen,
 }: DeleteCommentDialogProps) {
-  const deleteCommentMutation = useDeleteCommentMutation(comment.postId);
+  const { comment } = useCommentContext();
+  const deleteCommentMutation = useDeleteComment();
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogContent>
@@ -48,7 +47,7 @@ export function DeleteCommentDialog({
           <Button
             variant="destructive"
             onClick={() =>
-              deleteCommentMutation.mutate(comment._id, {
+              deleteCommentMutation.mutate({commentId: comment._id}, {
                 onSuccess: () => setIsOpen(false),
               })
             }

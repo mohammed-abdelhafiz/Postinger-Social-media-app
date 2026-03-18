@@ -12,7 +12,7 @@ import { InputField } from "@/components/shared/InputField";
 import { PasswordField } from "@/components/shared/password-field/PasswordField";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useRegisterMutation } from "../../hooks/useRegisterMutation";
+import { useRegisterMutation } from "../../hooks/useRegister";
 import { TextareaField } from "@/components/shared/TextareaField";
 
 export const RegisterForm = () => {

@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/apiError";
-import { createPost } from "../services/feedApi";
+import { editPost } from "../services/feedApi";
 
-export const useCreatePostMutation = () => {
+export const useEditPost = () => {
   const queryclient = useQueryClient();
   return useMutation({
-    mutationFn: createPost,
+    mutationFn: editPost,
 
     onSuccess: () => {
-      toast.success("Post created successfully");
+      toast.success("Post edited successfully");
       queryclient.invalidateQueries({ queryKey: ["posts"] });
     },
 

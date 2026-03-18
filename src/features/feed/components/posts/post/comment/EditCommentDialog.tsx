@@ -5,17 +5,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Comment } from "@/features/feed/types/feed.types";
 import { EditCommentForm } from "./EditCommentForm";
 
 interface EditCommentDialogProps {
-  comment: Comment;
   open: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
 export function EditCommentDialog({
-  comment,
   open,
   setIsOpen,
 }: EditCommentDialogProps) {
@@ -29,7 +26,7 @@ export function EditCommentDialog({
             Your comment will be updated immediately.
           </DialogDescription>
         </DialogHeader>
-        <EditCommentForm comment={comment} setIsOpen={setIsOpen} />
+        <EditCommentForm setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
   );

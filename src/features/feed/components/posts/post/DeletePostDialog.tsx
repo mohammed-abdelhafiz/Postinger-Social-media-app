@@ -8,21 +8,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeletePostMutation } from "@/features/feed/hooks/useDeletePostMutation";
+import { usePostContext } from "@/features/feed/contexts/PostContext";
+import { useDeletePost } from "@/features/feed/hooks/useDeletePost";
 import { AlertTriangleIcon } from "lucide-react";
 
 interface DeletePostDialogProps {
-  postId: string;
   open: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export function DeletePostDialog({
-  postId,
-  open,
-  setIsOpen,
-}: DeletePostDialogProps) {
-  const deletePostMutation = useDeletePostMutation();
+export function DeletePostDialog({ open, setIsOpen }: DeletePostDialogProps) {
+  const { post } = usePostContext();
+  const deletePostMutation = useDeletePost();
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogContent>
@@ -47,9 +44,12 @@ export function DeletePostDialog({
           <Button
             variant="destructive"
             onClick={() =>
-              deletePostMutation.mutate(postId, {
-                onSuccess: () => setIsOpen(false), 
-              })
+              deletePostMutation.mutate(
+                { postId: post._id },
+                {
+                  onSuccess: () => setIsOpen(false),
+                },
+              )
             }
             disabled={deletePostMutation.isPending}
           >

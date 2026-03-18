@@ -7,14 +7,15 @@ import {
 } from "@/components/ui/dialog";
 import { Post } from "@/features/feed/types/feed.types";
 import { EditPostForm } from "./EditPostForm";
+import { usePostContext } from "@/features/feed/contexts/PostContext";
 
 interface EditPostDialogProps {
-  post: Post;
   open: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export function EditPostDialog({ post, open, setIsOpen }: EditPostDialogProps) {
+export function EditPostDialog({ open, setIsOpen }: EditPostDialogProps) {
+  const { post } = usePostContext();
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogContent>
@@ -25,7 +26,7 @@ export function EditPostDialog({ post, open, setIsOpen }: EditPostDialogProps) {
             Your post will be updated immediately.
           </DialogDescription>
         </DialogHeader>
-        <EditPostForm post={post} setIsOpen={setIsOpen}/>
+        <EditPostForm setIsOpen={setIsOpen}/>
       </DialogContent>
     </Dialog>
   );

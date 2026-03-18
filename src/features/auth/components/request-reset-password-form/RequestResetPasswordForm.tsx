@@ -10,7 +10,7 @@ import {
   resetPasswordSchema,
   ResetPasswordData,
 } from "@/features/auth/types/auth.schema";
-import { useRequestResetPasswordMutation } from "../../hooks/useRequestResetPasswordMutation";
+import { useRequestResetPasswordMutation } from "../../hooks/useRequestResetPassword";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 

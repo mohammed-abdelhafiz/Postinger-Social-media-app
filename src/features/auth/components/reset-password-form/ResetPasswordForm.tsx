@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { PasswordField } from "@/components/shared/password-field/PasswordField";
-import { useCreateNewPasswordMutation } from "../../hooks/useCreateNewPasswordMutation";
+import { useCreateNewPasswordMutation } from "../../hooks/useResetPassword";
 import { useParams } from "next/navigation";
 
 export const ResetPasswordForm = () => {

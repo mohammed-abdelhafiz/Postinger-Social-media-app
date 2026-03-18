@@ -9,6 +9,3 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function timeAgo(date: string) {
-  return dayjs(date).fromNow();
-}

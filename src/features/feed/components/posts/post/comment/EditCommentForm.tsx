@@ -4,27 +4,32 @@ import { Input } from "@/components/ui/input";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SubmitEvent, useState } from "react";
-import { useEditCommentMutation } from "@/features/feed/hooks/useEditCommentMutation";
+import { useEditComment } from "@/features/feed/hooks/useEditComment";
+import { useCommentContext } from "@/features/feed/contexts/CommentContext";
 
 interface EditCommentFormProps {
-  comment: Comment;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export const EditCommentForm = ({
-  comment,
-  setIsOpen,
-}: EditCommentFormProps) => {
+export const EditCommentForm = ({ setIsOpen }: EditCommentFormProps) => {
+  const { comment } = useCommentContext();
   const [content, setContent] = useState(comment.content);
-  const editCommentMutation = useEditCommentMutation(comment.postId);
-  const handleSubmit = (e:SubmitEvent) => {
-    e.preventDefault()
+  const editCommentMutation = useEditComment();
+  const handleSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+    if (
+      content === comment.content ||
+      !content.trim().length ||
+      content.trim().length > 500 ||
+      editCommentMutation.isPending
+    )
+      return;
+    setIsOpen(false);
     editCommentMutation.mutate(
       { commentId: comment._id, content },
       {
         onSuccess: () => {
           setContent("");
-          setIsOpen(false);
         },
       },
     );
@@ -40,12 +45,18 @@ export const EditCommentForm = ({
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            maxLength={500}
+            disabled={editCommentMutation.isPending}
           />
         </Field>
       </FieldGroup>
       <DialogFooter>
         <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
-        <Button type="submit" form="edit-comment-form" disabled={isSubmitDisabled}>
+        <Button
+          type="submit"
+          form="edit-comment-form"
+          disabled={isSubmitDisabled}
+        >
           {editCommentMutation.isPending ? "Saving..." : "Save changes"}
         </Button>
       </DialogFooter>

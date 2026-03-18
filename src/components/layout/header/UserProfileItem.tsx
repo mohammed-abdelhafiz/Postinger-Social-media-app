@@ -16,18 +16,17 @@ import {
 import Link from "next/link";
 
 import { LogOutIcon, PaletteIcon, UserIcon } from "lucide-react";
-import { useLogoutMutation } from "@/features/auth/hooks/useLogoutMutation";
+import { useLogoutMutation } from "@/features/auth/hooks/useLogout";
 import { useToggleTheme } from "@/hooks/useToggleTheme";
 import { useTheme } from "next-themes";
 import { Theme } from "@/types";
-import { useGetMeQuery } from "@/features/auth/hooks/useGetMeQuery";
+import { useAuthStore } from "@/store/auth.store";
 
 export function UserProfileItem() {
   const logoutMutation = useLogoutMutation();
   const { theme, setTheme } = useTheme();
   const toggleTheme = useToggleTheme(setTheme);
-  const { data: user } = useGetMeQuery();
-
+  const user = useAuthStore((s) => s.user);
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>

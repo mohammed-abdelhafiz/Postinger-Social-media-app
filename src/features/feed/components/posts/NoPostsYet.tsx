@@ -6,8 +6,8 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { useNewPostInputStore } from "@/store/newPostInput";
 import { useRouter } from "next/navigation";
+import { useFeedStore } from "@/store/feed.store";
 
 function BoardIllustration() {
   return (
@@ -109,7 +109,7 @@ function BoardIllustration() {
 }
 
 export function NoPostsYet({ activeTab }: { activeTab: string }) {
-  const focusInput = useNewPostInputStore((s) => s.focus);
+  const focusInput = useFeedStore((s) => s.focusNewPostInputRef);
   const router = useRouter();
   return (
     <div className="flex items-center justify-center p-4">
@@ -119,22 +119,23 @@ export function NoPostsYet({ activeTab }: { activeTab: string }) {
             <BoardIllustration />
           </EmptyMedia>
           <EmptyTitle>
-            {activeTab === "for-you"
-              ? "No posts yet"
-              : "No Following Posts"}
+            {activeTab === "for-you" ? "No posts yet" : "No Following Posts"}
           </EmptyTitle>
           <EmptyDescription>
             {activeTab === "for-you"
               ? "No posts yet"
               : "Follow some people to see their posts"}
           </EmptyDescription>
-          <Button className="mt-2 cursor-pointer" onClick={() => {
-            if(activeTab === "for-you") {
-              focusInput();
-            } else {
-              router.push("/explore");
-            }
-          }}>
+          <Button
+            className="mt-2 cursor-pointer"
+            onClick={() => {
+              if (activeTab === "for-you") {
+                focusInput();
+              } else {
+                router.push("/explore");
+              }
+            }}
+          >
             {activeTab === "for-you"
               ? "Post your first thought"
               : "Follow some people"}
