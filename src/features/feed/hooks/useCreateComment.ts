@@ -56,10 +56,6 @@ export const useCreateComment = () => {
       }
     },
 
-    onSuccess: () => {
-      toast.success("Comment created successfully");
-    },
-
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey, exact: true });
     },

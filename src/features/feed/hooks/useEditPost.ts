@@ -9,7 +9,6 @@ export const useEditPost = () => {
     mutationFn: editPost,
 
     onSuccess: () => {
-      toast.success("Post edited successfully");
       queryclient.invalidateQueries({ queryKey: ["posts"] });
     },
 

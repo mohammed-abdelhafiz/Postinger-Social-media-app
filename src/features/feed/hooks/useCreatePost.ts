@@ -48,10 +48,6 @@ export const useCreatePost = () => {
       }
     },
 
-    onSuccess: () => {
-      toast.success("Post created successfully");
-    },
-
     onSettled: () => {
       const currentData = queryClient.getQueryData(queryKey) as any;
       if (currentData?.pages?.[0]?.data) {

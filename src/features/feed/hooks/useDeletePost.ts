@@ -42,10 +42,6 @@ export const useDeletePost = () => {
       }
     },
 
-    onSuccess: () => {
-      toast.success("Post deleted successfully");
-    },
-
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey, exact: true });
     },

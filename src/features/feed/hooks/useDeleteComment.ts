@@ -86,9 +86,5 @@ export const useDeleteComment = () => {
         exact: true,
       });
     },
-
-    onSuccess: () => {
-      toast.success("Comment deleted successfully");
-    },
   });
 };

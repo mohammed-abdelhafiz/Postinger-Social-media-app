@@ -59,9 +59,5 @@ export const useEditComment = () => {
         exact: true,
       });
     },
-
-    onSuccess: () => {
-      toast.success("Comment updated successfully");
-    },
   });
 };
