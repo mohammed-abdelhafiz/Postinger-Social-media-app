@@ -1,7 +1,3 @@
-
-
-const page = () => {
-  return <div>page</div>;
-};
-
-export default page;
+export default async function ProfilePage() {
+  return <div>Profile</div>;
+}

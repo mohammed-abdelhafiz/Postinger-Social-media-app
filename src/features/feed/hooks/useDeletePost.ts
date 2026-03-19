@@ -1,0 +1,52 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { ApiError } from "@/lib/apiError";
+import { deletePost, DeletePostData } from "../services/feedApi";
+import { Post } from "../types/feed.types";
+
+import { useFeedStore } from "@/store/feed.store";
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  const activeTab = useFeedStore((s) => s.activeTab);
+  const queryKey = ["posts", activeTab];
+
+  return useMutation({
+    mutationFn: deletePost,
+
+    onMutate: async ({ postId }: DeletePostData) => {
+      await queryClient.cancelQueries({ queryKey });
+
+      const prevData = queryClient.getQueryData(queryKey);
+
+      queryClient.setQueryData(queryKey, (oldData: any) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: any) => ({
+            ...page,
+            data: page.data.filter((post: Post) => post._id !== postId),
+          })),
+        };
+      });
+
+      return { prevData };
+    },
+
+    onError: (error, _vars, context) => {
+      if (context?.prevData) {
+        queryClient.setQueryData(queryKey, context.prevData);
+      }
+
+      if (error instanceof ApiError) {
+        toast.error(error.message);
+      } else {
+        toast.error("Unexpected error occurred");
+      }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey, exact: true });
+    },
+  });
+};

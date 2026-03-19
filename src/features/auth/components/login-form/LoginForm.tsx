@@ -12,7 +12,7 @@ import { InputField } from "@/components/shared/InputField";
 import { LoginData, loginSchema } from "@/features/auth/types/auth.schema";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useLoginMutation } from "../../hooks/useLoginMutation";
+import { useLoginMutation } from "../../hooks/useLogin";
 import { Loader2 } from "lucide-react";
 
 export const LoginForm = () => {

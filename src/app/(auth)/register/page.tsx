@@ -27,7 +27,7 @@ export default function RegisterPage() {
           <CardContent>
             <RegisterForm />
           </CardContent>
-          <CardFooter className="pt-4">
+          <CardFooter className="pt-4 bg-transparent border-t-0">
             <p className="text-sm text-muted-foreground ml-0.5">
               Already have an account?
               <Link

@@ -9,6 +9,7 @@ interface InputFieldProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
   placeholder: string;
+  className?: string;
 }
 
 export const InputField = <T extends FieldValues>({
@@ -16,13 +17,14 @@ export const InputField = <T extends FieldValues>({
   name,
   label,
   placeholder,
+  className,
 }: InputFieldProps<T>) => {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid}>
+        <Field data-invalid={fieldState.invalid} className={className}>
           <div className="flex items-center gap-2">
             <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
             {fieldState.error && (
