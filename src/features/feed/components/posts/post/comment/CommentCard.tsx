@@ -57,7 +57,6 @@ export const CommentCard = () => {
           variant="link"
           className="text-sm text-muted-foreground"
           onClick={() => setIsCommentLikesDialogOpen(true)}
-          disabled={comment.likesCount === 0}
         >
           {comment.likesCount} {comment.likesCount === 1 ? "like" : "likes"}
         </Button>

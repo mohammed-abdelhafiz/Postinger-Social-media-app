@@ -28,7 +28,7 @@ export default function RequestResetPasswordPage() {
           <CardContent>
             <RequestResetPasswordForm />
           </CardContent>
-          <CardFooter className="pt-4">
+          <CardFooter className="pt-4 bg-transparent border-t-0">
             <p className="text-sm text-muted-foreground ml-0.5">
               Remember your password?
               <Link

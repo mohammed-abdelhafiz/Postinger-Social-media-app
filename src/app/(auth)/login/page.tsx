@@ -27,7 +27,7 @@ export default function LoginPage() {
           <CardContent>
             <LoginForm />
           </CardContent>
-          <CardFooter className="pt-4">
+          <CardFooter className="pt-4 bg-transparent border-t-0">
             <p className="text-sm text-muted-foreground ml-0.5">
               Don&apos;t have an account?
               <Link

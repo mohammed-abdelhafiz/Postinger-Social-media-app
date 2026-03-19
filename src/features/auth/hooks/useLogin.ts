@@ -3,15 +3,15 @@ import { login } from "../services/authApi";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/apiError";
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import { useAuthStore } from "@/store/auth.store";
 
 export const useLoginMutation = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const setUser = useAuthStore((state) => state.setUser);
   return useMutation({
     mutationFn: login,
     onSuccess: ({ message, user }) => {
-      queryClient.setQueryData(["me"], user);
+      setUser(user);
       toast.success(message);
       router.replace("/");
     },

@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useRegisterMutation } from "../../hooks/useRegister";
 import { TextareaField } from "@/components/shared/TextareaField";
+import { AvatarInput } from "@/components/shared/avatar-input/AvatarInput";
+import { useState } from "react";
 
 export const RegisterForm = () => {
   const { control, handleSubmit } = useForm<RegisterData>({
@@ -27,10 +29,23 @@ export const RegisterForm = () => {
     },
   });
 
+  const [uploadedAvatar, setUploadedAvatar] = useState<File | null>(null);
+
   const registerMutation = useRegisterMutation();
 
   const onSubmit = async (registerData: RegisterData) => {
-    registerMutation.mutate(registerData);
+    const formData = new FormData();
+    formData.append("name", registerData.name);
+    formData.append("username", registerData.username);
+    formData.append("email", registerData.email);
+    formData.append("password", registerData.password);
+    if (registerData.bio) {
+      formData.append("bio", registerData.bio);
+    }
+    if (uploadedAvatar) {
+      formData.append("avatar", uploadedAvatar);
+    }
+    registerMutation.mutate(formData);
   };
 
   return (
@@ -55,6 +70,13 @@ export const RegisterForm = () => {
             placeholder="john_doe"
           />
         </div>
+        <AvatarInput setUploadedAvatar={setUploadedAvatar} />
+        <TextareaField
+          control={control}
+          name="bio"
+          label="Bio"
+          placeholder="Tell us about yourself"
+        />
         <InputField
           control={control}
           name="email"
@@ -67,12 +89,6 @@ export const RegisterForm = () => {
           name="password"
           label="Password"
           placeholder="••••••••"
-        />
-        <TextareaField
-          control={control}
-          name="bio"
-          label="Bio"
-          placeholder="Tell us about yourself"
         />
       </FieldGroup>
       <Button

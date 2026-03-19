@@ -27,14 +27,15 @@ export function UserProfileItem() {
   const { theme, setTheme } = useTheme();
   const toggleTheme = useToggleTheme(setTheme);
   const user = useAuthStore((s) => s.user);
+  if (!user) return null;
   return (
     <div className="flex items-center justify-center">
       <DropdownMenu>
         <DropdownMenuTrigger
           render={
             <Avatar className="size-8">
-              <AvatarImage src={user?.avatar} />
-              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+              <AvatarImage src={user.avatar.url} />
+              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>
           }
           nativeButton={false}
@@ -46,12 +47,12 @@ export function UserProfileItem() {
         >
           <div className="flex items-center gap-3 px-1 pt-1.5">
             <Avatar className="size-8">
-              <AvatarImage src={user?.avatar} />
-              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+              <AvatarImage src={user.avatar.url} />
+              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <span className="text-foreground text-sm font-medium">
-                {user?.name}
+                {user.name}
               </span>
               <span className="text-muted-foreground text-xs">
                 {user?.email}

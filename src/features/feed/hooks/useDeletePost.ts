@@ -4,9 +4,12 @@ import { ApiError } from "@/lib/apiError";
 import { deletePost, DeletePostData } from "../services/feedApi";
 import { Post } from "../types/feed.types";
 
+import { useFeedStore } from "@/store/feed.store";
+
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
-  const queryKey = ["posts", "for-you"];
+  const activeTab = useFeedStore((s) => s.activeTab);
+  const queryKey = ["posts", activeTab];
 
   return useMutation({
     mutationFn: deletePost,

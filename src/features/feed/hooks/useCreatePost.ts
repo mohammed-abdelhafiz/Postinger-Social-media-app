@@ -68,7 +68,7 @@ function createOptimisticPost(formData: FormData): Post {
   const newPostImage = formData.get("image");
   const imageUrl = newPostImage
     ? URL.createObjectURL(newPostImage as File)
-    : "";
+    : null;
   const user = useAuthStore.getState().user;
   if (!user) {
     throw new Error("User not found");
@@ -77,10 +77,12 @@ function createOptimisticPost(formData: FormData): Post {
     _id: `temp-${Date.now()}`,
     content: {
       text: newPostText as string,
-      image: {
-        url: imageUrl,
-        publicId: "",
-      },
+      image: imageUrl
+        ? {
+            url: imageUrl,
+            publicId: "",
+          }
+        : null,
     },
     author: user,
     createdAt: new Date().toISOString(),

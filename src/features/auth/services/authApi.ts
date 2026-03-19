@@ -5,8 +5,12 @@ import {
   ResetPasswordData,
 } from "../types/auth.schema";
 
-export const register = async (registerData: RegisterData) => {
-  const response = await api.post("/auth/register", registerData);
+export const register = async (registerData: FormData) => {
+  const response = await api.post("/auth/register", registerData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response.data;
 };
 export const login = async (loginData: LoginData) => {

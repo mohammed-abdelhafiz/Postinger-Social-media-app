@@ -26,10 +26,10 @@ export const UserCard = () => {
       <CardContent className="flex flex-col gap-4 items-center">
         <div className="flex items-center flex-col gap-3">
           <Avatar>
-            <AvatarImage src={user?.avatar} />
-            <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+            <AvatarImage src={user.avatar.url} />
+            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
-          <h5 className="font-semibold leading-none">{user?.name}</h5>
+          <h5 className="font-semibold leading-none">{user.name}</h5>
         </div>
         <Tooltip>
           <TooltipTrigger

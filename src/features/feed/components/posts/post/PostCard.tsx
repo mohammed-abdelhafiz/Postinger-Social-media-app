@@ -42,7 +42,6 @@ export default function PostCard({ priority = false }: PostCardProps) {
   };
   const [isCommentsDialogOpen, setIsCommentsDialogOpen] = useState(false);
   const [isPostLikesDialogOpen, setIsPostLikesDialogOpen] = useState(false);
-
   return (
     <Card
       className="w-full bg-linear-to-br from-background/5 to-background/2
@@ -106,7 +105,6 @@ export default function PostCard({ priority = false }: PostCardProps) {
             size="xs"
             className="text-sm text-muted-foreground"
             onClick={() => setIsPostLikesDialogOpen(true)}
-            disabled={post.likesCount === 0}
           >
             {post.likesCount} {post.likesCount === 1 ? "like" : "likes"}
           </Button>

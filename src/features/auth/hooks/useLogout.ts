@@ -15,7 +15,7 @@ export const useLogoutMutation = () => {
     mutationFn: logout,
 
     onSuccess: ({ message }) => {
-      queryClient.removeQueries({ queryKey: ["me"] });
+      queryClient.removeQueries();
       setUser(null);
       toast.success(message);
       router.replace("/login");

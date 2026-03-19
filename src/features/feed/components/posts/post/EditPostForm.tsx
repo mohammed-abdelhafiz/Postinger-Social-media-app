@@ -54,6 +54,7 @@ export const EditPostForm = ({ setIsOpen }: EditPostFormProps) => {
     } else if (!data.newImageFile && !previewUrl) {
       formData.append("removeOldImage", "true");
     }
+    setIsOpen(false);
     editPostMutation.mutate(
       { postId: post._id, formData },
       {
@@ -63,7 +64,6 @@ export const EditPostForm = ({ setIsOpen }: EditPostFormProps) => {
             newImageFile: null,
           });
           setPreviewUrl(updatedPost.content.image?.url || null);
-          setIsOpen(false);
         },
       },
     );

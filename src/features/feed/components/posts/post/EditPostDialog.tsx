@@ -15,7 +15,6 @@ interface EditPostDialogProps {
 }
 
 export function EditPostDialog({ open, setIsOpen }: EditPostDialogProps) {
-  const { post } = usePostContext();
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogContent>

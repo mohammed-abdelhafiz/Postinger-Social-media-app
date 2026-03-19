@@ -24,10 +24,11 @@ export async function createPost(data: CreatePostData) {
   return res.data;
 }
 
-export async function editPost(data: {
+export interface EditPostData {
   postId: string;
   formData: FormData;
-}): Promise<Post> {
+}
+export async function editPost(data: EditPostData): Promise<Post> {
   const res = await api.put(`/posts/${data.postId}`, data.formData, {
     headers: {
       "Content-Type": "multipart/form-data",

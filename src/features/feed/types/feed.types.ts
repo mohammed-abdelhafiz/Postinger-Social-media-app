@@ -8,7 +8,7 @@ export interface Post {
     image: {
       url: string;
       publicId: string;
-    };
+    } | null;
   };
   createdAt: string;
   updatedAt: string;
