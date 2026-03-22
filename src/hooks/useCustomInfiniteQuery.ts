@@ -21,6 +21,5 @@ export const useCustomInfiniteQuery = <T extends object>({
       lastPage.hasNextPage ? lastPage.nextPage : undefined,
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
-    placeholderData: (prev) => prev,
   });
 };

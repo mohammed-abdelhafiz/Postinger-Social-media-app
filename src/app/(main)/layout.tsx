@@ -8,9 +8,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col h-screen">
+    <div className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-screen overflow-hidden">
       <Header />
-      {children}
+      <div className="h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] overflow-y-auto hide-scrollbar">
+        {children}
+      </div>
       <FloatingActionButton />
     </div>
   );

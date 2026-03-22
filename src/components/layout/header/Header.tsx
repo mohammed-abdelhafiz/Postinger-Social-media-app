@@ -36,7 +36,7 @@ export function Header() {
 
   return (
     <motion.header
-      className="transition-all duration-300 px-4 md:px-6"
+      className="transition-all duration-300 px-4"
       variants={headerVariants}
       initial="initial"
       animate="animate"

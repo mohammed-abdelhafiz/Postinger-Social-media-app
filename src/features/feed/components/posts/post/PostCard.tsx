@@ -51,7 +51,7 @@ export default function PostCard({ priority = false }: PostCardProps) {
     >
       <CardHeader className="flex gap-3">
         <Avatar className="shrink-0">
-          <AvatarImage src={post.author.avatar.url} alt={post.author.username} />
+          <AvatarImage src={post.author.avatar?.url} alt={post.author.username} />
           <AvatarFallback>{post.author.username?.charAt(0)}</AvatarFallback>
         </Avatar>
 

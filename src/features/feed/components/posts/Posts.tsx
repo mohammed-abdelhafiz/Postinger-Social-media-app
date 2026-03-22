@@ -53,7 +53,7 @@ export const Posts = () => {
             </PostProvider>
           ))}
           {isFetchingNextPage && <PostsSkeleton />}
-          <div ref={ref} className="h-4 w-full" />
+          {posts.length > 0 && hasNextPage && <div ref={ref} className="h-4 w-full" />}
         </>
       ) : (
         <NoPostsYet activeTab={activeTab} />

@@ -18,7 +18,7 @@ export function PostsError({ refetch }: { refetch: () => void }) {
           </div>
         </EmptyTitle>
         <EmptyDescription>
-          We're having trouble loading posts right now.
+          We&apos;re having trouble loading posts right now.
           <br />
           Please try again later.
         </EmptyDescription>

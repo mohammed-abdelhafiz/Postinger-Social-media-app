@@ -1,5 +1,4 @@
 import api from "@/lib/api";
-import { AxiosProgressEvent } from "axios";
 import { Post } from "@/features/feed/types/feed.types";
 
 export async function getPosts({activeTab, pageParam}: {activeTab: string, pageParam: number}) {

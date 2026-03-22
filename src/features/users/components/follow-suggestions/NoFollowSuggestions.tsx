@@ -108,37 +108,28 @@ function BoardIllustration() {
   );
 }
 
-export function NoPostsYet({ activeTab }: { activeTab: string }) {
-  const openCreatePostDialog = useFeedStore((s) => s.openCreatePostDialog);
+export function NoFollowSuggestions({ className }: { className?: string }) {
+  const setActiveTab = useFeedStore((s) => s.setActiveTab);
   const router = useRouter();
   return (
-    <div className="flex items-center justify-center p-4">
-      <Empty className="py-12">
+    <div className={`flex items-center justify-center p-4 ${className}`}>
+      <Empty>
         <EmptyHeader>
           <EmptyMedia>
             <BoardIllustration />
           </EmptyMedia>
-          <EmptyTitle>
-            {activeTab === "for-you" ? "No posts yet" : "No Following Posts"}
-          </EmptyTitle>
+          <EmptyTitle>No Follow Suggestions</EmptyTitle>
           <EmptyDescription>
-            {activeTab === "for-you"
-              ? "Be the first to share something"
-              : "Follow some people to see their posts"}
-          </EmptyDescription>{" "}
+            There are no follow suggestions at the moment
+          </EmptyDescription>
           <Button
             className="mt-2 cursor-pointer"
             onClick={() => {
-              if (activeTab === "for-you") {
-                openCreatePostDialog();
-              } else {
-                router.push("/follow");
-              }
+              router.push("/");
+              setActiveTab("following");
             }}
           >
-            {activeTab === "for-you"
-              ? "Post your first thought"
-              : "Follow some people"}
+            Explore following posts
           </Button>
         </EmptyHeader>
       </Empty>

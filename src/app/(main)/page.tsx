@@ -5,13 +5,11 @@ import type { Metadata } from "next";
 
 export default function HomePage() {
   return (
-    <div className="flex gap-4 flex-1 overflow-hidden">
+    <div className="flex gap-4 h-full">
       <aside className="w-72 hidden lg:block">
         <UserCard />
       </aside>
-      <div className="flex-1 space-y-1 overflow-y-auto pr-1.5 hide-scrollbar">
-        <Feed />
-      </div>
+      <Feed />
       <aside className="w-72 hidden sm:block">
         <SuggestionsCard />
       </aside>

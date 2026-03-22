@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "res.cloudinary.com",
       },
+      {
+        hostname: "images.unsplash.com",
+      },
     ],
   },
   async rewrites() {
