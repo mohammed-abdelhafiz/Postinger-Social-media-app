@@ -44,9 +44,12 @@ export function PasswordField<T extends FieldValues>({
                 <TooltipContent
                   align="end"
                   sideOffset={5}
-                  className={cn(name === "password" && "w-72 space-y-4 pt-4")}
+                  className={cn(
+                    (name === "password" || name === "newPassword") &&
+                      "w-72 space-y-4 pt-4",
+                  )}
                 >
-                  {name === "password" ? (
+                  {name === "password" || name === "newPassword" ? (
                     <PasswordReqs value={field.value} />
                   ) : (
                     fieldState.error.message

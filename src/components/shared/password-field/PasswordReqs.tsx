@@ -43,7 +43,7 @@ export const PasswordReqs = ({ value }: PasswordReqsProps) => {
     return "Strong security";
   };
   return (
-    <>
+    <div className="flex flex-col gap-2 w-full">
       <div
         aria-label="Password strength"
         aria-valuemax={5}
@@ -98,6 +98,6 @@ export const PasswordReqs = ({ value }: PasswordReqsProps) => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };

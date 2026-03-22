@@ -1,24 +1,35 @@
 import axios from "axios";
 import { ApiError } from "./apiError";
-import { useAuthStore } from "@/store/authStore";
+import { refreshToken } from "@/features/auth/services/authApi";
 
 const api = axios.create({
-  baseURL: "https://postinger-app.vercel.app/api",
+  baseURL: `${process.env.NEXT_PUBLIC_APP_URL}/api`,
 });
 
-api.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().accessToken;
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-});
-
+let refreshPromise: Promise<void> | null = null;
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      originalRequest.url !== "/auth/refresh-access-token" &&
+      originalRequest.url !== "/auth/login"
+    ) {
+      originalRequest._retry = true;
+      try {
+        if (!refreshPromise) {
+          refreshPromise = refreshToken();
+        }
+        await refreshPromise;
+        refreshPromise = null;
+        return api(originalRequest);
+      } catch (refreshError) {
+        return Promise.reject(refreshError);
+      }
+    }
+
     const message =
       error.response?.data?.error?.message ||
       error.response?.data?.message ||

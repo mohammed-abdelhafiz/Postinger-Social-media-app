@@ -2,40 +2,60 @@
 
 import { FieldGroup } from "@/components/ui/field";
 
-import { toast } from "sonner";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { InputField } from "@/components/shared/InputField";
 import {
-  resetPasswordSchema,
-  ResetPasswordSchema,
+  CreateNewPasswordData,
+  createNewPasswordSchema,
 } from "@/features/auth/types/auth.schema";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { PasswordField } from "@/components/shared/password-field/PasswordField";
+import { useCreateNewPasswordMutation } from "../../hooks/useResetPassword";
+import { useParams } from "next/navigation";
 
 export const ResetPasswordForm = () => {
-  const form = useForm<ResetPasswordSchema>({
-    resolver: zodResolver(resetPasswordSchema),
+  const token  = useParams().token as string;
+  const { handleSubmit, control } = useForm<CreateNewPasswordData>({
+    resolver: zodResolver(createNewPasswordSchema),
     defaultValues: {
-      email: "",
+      newPassword: "",
     },
   });
+  const { mutate: createNewPassword, isPending } =
+    useCreateNewPasswordMutation();
 
-  const onSubmit = (data: ResetPasswordSchema) => {
-    toast.success("Password reset email sent!");
-    console.log(data);
+  const onSubmit = (data: CreateNewPasswordData) => {
+    createNewPassword({ newPassword: data.newPassword, token });
   };
 
   return (
-    <form id="reset-password-form" onSubmit={form.handleSubmit(onSubmit)}>
+    <form
+      id="create-new-password-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4"
+    >
       <FieldGroup className="gap-5">
-        <InputField
-          control={form.control}
-          name="email"
-          label="Email"
-          placeholder="john.doe@example.com"
+        <PasswordField
+          control={control}
+          name="newPassword"
+          label="New Password"
+          placeholder="********"
         />
       </FieldGroup>
+      <Button
+        type="submit"
+        form="create-new-password-form"
+        className="w-full cursor-pointer"
+        disabled={isPending}
+      >
+        {isPending ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          "Create New Password"
+        )}
+      </Button>
     </form>
   );
 };

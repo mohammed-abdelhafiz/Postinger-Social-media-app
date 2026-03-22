@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/styles/globals.css";
+import { Geist, Outfit } from "next/font/google";
+import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { InitialAuthProvider } from "@/providers/InitialAuthProvider";
+import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/providers/AuthProvider";
 
-const inter = Inter({
-  subsets: ["latin"],
-});
+const outfit = Outfit({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Postinger",
@@ -23,18 +21,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("font-sans", outfit.variable)}
+    >
+      <body className="antialiased">
         <ThemeProvider>
-          <ReactQueryProvider>
-            <InitialAuthProvider>
-              <TooltipProvider>
+          <TooltipProvider>
+            <ReactQueryProvider>
+              <AuthProvider>
                 <main className="min-h-screen">{children}</main>
-                <ThemeToggle />
-                <Toaster richColors />
-              </TooltipProvider>
-            </InitialAuthProvider>
-          </ReactQueryProvider>
+              </AuthProvider>
+              <Toaster richColors />
+            </ReactQueryProvider>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
