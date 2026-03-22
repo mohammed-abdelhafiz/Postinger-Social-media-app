@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/apiError";
-import { createPost, CreatePostData } from "../services/feedApi";
+import { createPost } from "../services/feedApi";
 import { useAuthStore } from "@/store/auth.store";
 import { Post } from "../types/feed.types";
 
@@ -12,7 +12,7 @@ export const useCreatePost = () => {
   return useMutation({
     mutationFn: createPost,
 
-    onMutate: async ({ formData }: CreatePostData) => {
+    onMutate: async (formData: FormData) => {
       await queryClient.cancelQueries({ queryKey });
 
       const prevData = queryClient.getQueryData(queryKey);

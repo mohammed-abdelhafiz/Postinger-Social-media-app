@@ -10,16 +10,11 @@ export async function getPosts({activeTab, pageParam}: {activeTab: string, pageP
   return res.data;
 }
 
-export interface CreatePostData {
-  formData: FormData;
-  handleProgress: (progressEvent: AxiosProgressEvent) => void;
-}
-export async function createPost(data: CreatePostData) {
-  const res = await api.post("/posts", data.formData, {
+export async function createPost(formData: FormData) {
+  const res = await api.post("/posts", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    onUploadProgress: data.handleProgress,
   });
   return res.data;
 }

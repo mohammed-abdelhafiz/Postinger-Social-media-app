@@ -8,9 +8,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/providers/AuthProvider";
 
-const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
+const geistHeading = Geist({ subsets: ['latin'], variable: '--font-heading' });
 
-const outfit = Outfit({subsets:['latin'],variable:'--font-sans'});
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: "Postinger",
@@ -26,7 +26,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(, "font-sans", outfit.variable, geistHeading.variable)}
+      className={cn("font-sans", outfit.variable, geistHeading.variable)}
     >
       <body className="antialiased">
         <ThemeProvider>
