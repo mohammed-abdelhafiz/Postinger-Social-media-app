@@ -1,4 +1,4 @@
-import { User } from "@/shared/types";
+import { User } from "@/features/users/types";
 import * as z from "zod";
 import { createPostSchema, editPostSchema } from "./schema";
 

@@ -8,7 +8,7 @@ import {
 } from "@/shared/components/ui/card";
 import { MagicCard } from "@/shared/components/ui/magic-card";
 
-import { RequestResetPasswordForm } from "@/features/auth/components/forgot-password-form/ForgotPasswordForm";
+import { ForgotPasswordForm } from "@/features/auth/components/forgot-password-form/ForgotPasswordForm";
 import Link from "next/link";
 
 export default function ForgotPasswordPage() {
@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <RequestResetPasswordForm />
+            <ForgotPasswordForm />
           </CardContent>
           <CardFooter className="pt-4 bg-transparent border-t-0">
             <p className="text-sm text-muted-foreground ml-0.5">

@@ -1,4 +1,4 @@
-import { User } from "@/shared/types";
+import { User } from "@/features/users/types";
 
 export interface CreateCommentData {
   postId: string;

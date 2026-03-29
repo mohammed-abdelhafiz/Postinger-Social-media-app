@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
-import { User } from "@/shared/types";
+import { User } from "@/features/users/types";
 import Link from "next/link";
 
 interface LikeCardProps {
@@ -13,7 +13,7 @@ export const LikeCard = ({ like }: LikeCardProps) => {
       className="flex items-center gap-2 group"
     >
       <Avatar>
-        <AvatarImage src={like.avatar} />
+        <AvatarImage src={like.avatar.url} />
         <AvatarFallback>{like.name?.[0] ?? "?"}</AvatarFallback>
       </Avatar>
       <div className="flex-1">

@@ -3,8 +3,8 @@ import { toast } from "sonner";
 import { ApiError } from "@/shared/lib/apiError";
 import { usePostContext } from "../../posts/context/PostContext";
 import { editComment } from "../services/commentsApi";
-import { EditCommentData } from "../types";
-import { Comment, CommentsQueryPage } from "@/features/posts/types";
+import { Comment, CommentsQueryPage, EditCommentData } from "../types";
+
 
 export const useEditComment = () => {
   const queryClient = useQueryClient();

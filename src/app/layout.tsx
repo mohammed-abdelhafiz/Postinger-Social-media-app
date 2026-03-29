@@ -8,9 +8,9 @@ import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { cn } from "@/shared/lib/utils";
 import { AuthProvider } from "@/shared/providers/AuthProvider";
 
-const geistHeading = Geist({ subsets: ['latin'], variable: '--font-heading' });
+const geistHeading = Geist({ subsets: ["latin"], variable: "--font-heading" });
 
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-sans' });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Postinger",
