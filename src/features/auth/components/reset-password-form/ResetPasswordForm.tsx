@@ -1,38 +1,36 @@
 "use client";
 
-import { FieldGroup } from "@/components/ui/field";
+import { FieldGroup } from "@/shared/components/ui/field";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  CreateNewPasswordData,
-  createNewPasswordSchema,
-} from "@/features/auth/types/auth.schema";
-import { Button } from "@/components/ui/button";
+import { resetPasswordSchema } from "@/features/auth/types/schema";
+import { Button } from "@/shared/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { PasswordField } from "@/components/shared/password-field/PasswordField";
-import { useCreateNewPasswordMutation } from "../../hooks/useResetPassword";
+import { PasswordField } from "@/shared/components/shared/password-field/PasswordField";
+import { useResetPasswordMutation } from "../../hooks/useResetPassword";
 import { useParams } from "next/navigation";
+import { ResetPasswordData } from "../../types";
 
 export const ResetPasswordForm = () => {
-  const token  = useParams().token as string;
-  const { handleSubmit, control } = useForm<CreateNewPasswordData>({
-    resolver: zodResolver(createNewPasswordSchema),
+  const token = useParams().token as string;
+  const { handleSubmit, control } = useForm<ResetPasswordData>({
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       newPassword: "",
+      token,
     },
   });
-  const { mutate: createNewPassword, isPending } =
-    useCreateNewPasswordMutation();
+  const { mutate: resetPassword, isPending } = useResetPasswordMutation();
 
-  const onSubmit = (data: CreateNewPasswordData) => {
-    createNewPassword({ newPassword: data.newPassword, token });
+  const onSubmit = (data: ResetPasswordData) => {
+    resetPassword(data);
   };
 
   return (
     <form
-      id="create-new-password-form"
+      id="reset-password-form"
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-4"
     >
@@ -46,14 +44,14 @@ export const ResetPasswordForm = () => {
       </FieldGroup>
       <Button
         type="submit"
-        form="create-new-password-form"
+        form="reset-password-form"
         className="w-full cursor-pointer"
         disabled={isPending}
       >
         {isPending ? (
           <Loader2 className="animate-spin" />
         ) : (
-          "Create New Password"
+          "Reset Password"
         )}
       </Button>
     </form>

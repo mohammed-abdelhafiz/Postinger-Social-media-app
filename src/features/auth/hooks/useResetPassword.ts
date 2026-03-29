@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ApiError } from "@/lib/apiError";
-import { createNewPassword } from "../services/authApi";
+import { ApiError } from "@/shared/lib/apiError";
+import { resetPassword } from "../services/authApi";
 import { useRouter } from "next/navigation";
 
-export const useCreateNewPasswordMutation = () => {
+export const useResetPasswordMutation = () => {
   const router = useRouter();
   return useMutation({
-    mutationFn: createNewPassword,
+    mutationFn: resetPassword,
 
     onSuccess: ({ message }) => {
       toast.success(message);

@@ -5,8 +5,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { MagicCard } from "@/components/ui/magic-card";
+} from "@/shared/components/ui/card";
+import { MagicCard } from "@/shared/components/ui/magic-card";
 
 import { RegisterForm } from "@/features/auth/components/register-form/RegisterForm";
 import Link from "next/link";

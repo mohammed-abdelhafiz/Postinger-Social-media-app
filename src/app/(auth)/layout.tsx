@@ -1,7 +1,7 @@
-import { Logo } from "@/components/shared/Logo";
-import { FloatingPaths } from "@/components/ui/floating-paths";
+import { Logo } from "@/shared/components/shared/Logo";
+import { FloatingPaths } from "@/shared/components/ui/floating-paths";
 
-import { Particles } from "@/components/ui/particles";
+import { Particles } from "@/shared/components/ui/particles";
 
 export default function AuthLayout({
   children,

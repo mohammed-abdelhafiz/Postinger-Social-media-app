@@ -1,19 +1,18 @@
 "use client";
 
-import { FieldGroup } from "@/components/ui/field";
-
-
+import { FieldGroup } from "@/shared/components/ui/field";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { PasswordField } from "@/components/shared/password-field/PasswordField";
-import { InputField } from "@/components/shared/InputField";
-import { LoginData, loginSchema } from "@/features/auth/types/auth.schema";
+import { PasswordField } from "@/shared/components/shared/password-field/PasswordField";
+import { InputField } from "@/shared/components/shared/InputField";
+import { loginSchema } from "@/features/auth/types/schema";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { useLoginMutation } from "../../hooks/useLogin";
 import { Loader2 } from "lucide-react";
+import { LoginData } from "../../types";
 
 export const LoginForm = () => {
   const { control, handleSubmit } = useForm<LoginData>({

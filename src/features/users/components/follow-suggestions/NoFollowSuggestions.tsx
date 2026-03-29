@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@/shared/components/ui/empty";
 import { useRouter } from "next/navigation";
-import { useFeedStore } from "@/store/feed.store";
+import { useFeedStore } from "@/shared/store/feed.store";
 
 function BoardIllustration() {
   return (

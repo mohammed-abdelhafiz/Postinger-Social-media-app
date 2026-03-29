@@ -1,9 +1,11 @@
-import api from "@/lib/api";
+import api from "@/shared/lib/api";
 import {
-  LoginData,
-  RegisterData,
+  ForgotPasswordData,
   ResetPasswordData,
-} from "../types/auth.schema";
+  RegisterData,
+  LoginData,
+} from "../types";
+
 
 export const register = async (registerData: RegisterData) => {
   const response = await api.post("/auth/register", registerData);
@@ -15,7 +17,7 @@ export const login = async (loginData: LoginData) => {
 };
 
 export const refreshToken = async () => {
-  const response = await api.post("/auth/refresh-access-token");
+  const response = await api.post("/auth/refresh");
   return response.data;
 };
 
@@ -24,26 +26,20 @@ export const getMe = async () => {
   return response.data;
 };
 
-export const requestResetPassword = async (
-  resetPasswordData: ResetPasswordData,
+export const forgotPassword = async (
+  forgotPasswordData: ForgotPasswordData,
 ) => {
-  const response = await api.post(
-    "/auth/request-reset-password",
-    resetPasswordData,
-  );
+  const response = await api.post("/auth/forgot-password", forgotPasswordData);
   return response.data;
 };
 
-export const createNewPassword = async ({
-  newPassword,
-  token,
-}: {
-  newPassword: string;
-  token: string;
-}) => {
-  const response = await api.post(`/auth//reset-password/${token}`, {
-    newPassword,
-  });
+export const resetPassword = async (resetPasswordData: ResetPasswordData) => {
+  const response = await api.post(
+    `/auth/reset-password/${resetPasswordData.token}`,
+    {
+      newPassword: resetPasswordData.newPassword,
+    },
+  );
   return response.data;
 };
 

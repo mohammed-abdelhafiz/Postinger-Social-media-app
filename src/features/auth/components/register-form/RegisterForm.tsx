@@ -2,17 +2,15 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  registerSchema,
-  RegisterData,
-} from "@/features/auth/types/auth.schema";
+import { registerSchema } from "@/features/auth/types/schema";
 
-import { FieldGroup } from "@/components/ui/field";
-import { InputField } from "@/components/shared/InputField";
-import { PasswordField } from "@/components/shared/password-field/PasswordField";
-import { Button } from "@/components/ui/button";
+import { FieldGroup } from "@/shared/components/ui/field";
+import { InputField } from "@/shared/components/shared/InputField";
+import { PasswordField } from "@/shared/components/shared/password-field/PasswordField";
+import { Button } from "@/shared/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useRegisterMutation } from "../../hooks/useRegister";
+import { RegisterData } from "../../types";
 
 export const RegisterForm = () => {
   const { control, handleSubmit } = useForm<RegisterData>({

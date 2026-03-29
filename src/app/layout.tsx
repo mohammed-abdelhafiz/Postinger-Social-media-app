@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Outfit } from "next/font/google";
 import "./globals.css";
-import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/providers/ThemeProvider";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
-import { AuthProvider } from "@/providers/AuthProvider";
+import ReactQueryProvider from "@/shared/providers/ReactQueryProvider";
+import { Toaster } from "@/shared/components/ui/sonner";
+import { ThemeProvider } from "@/shared/providers/ThemeProvider";
+import { TooltipProvider } from "@/shared/components/ui/tooltip";
+import { cn } from "@/shared/lib/utils";
+import { AuthProvider } from "@/shared/providers/AuthProvider";
 
 const geistHeading = Geist({ subsets: ['latin'], variable: '--font-heading' });
 

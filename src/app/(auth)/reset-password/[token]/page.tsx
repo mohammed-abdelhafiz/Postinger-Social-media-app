@@ -4,8 +4,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { MagicCard } from "@/components/ui/magic-card";
+} from "@/shared/components/ui/card";
+import { MagicCard } from "@/shared/components/ui/magic-card";
 
 import { ResetPasswordForm } from "@/features/auth/components/reset-password-form/ResetPasswordForm";
 

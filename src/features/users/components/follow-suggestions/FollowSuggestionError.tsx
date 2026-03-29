@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import {
   Empty,
   EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
-} from "@/components/ui/empty";
+} from "@/shared/components/ui/empty";
 import { AlertTriangleIcon } from "lucide-react";
 export function FollowSuggestionError({ refetch }: { refetch: () => void }) {
   return (

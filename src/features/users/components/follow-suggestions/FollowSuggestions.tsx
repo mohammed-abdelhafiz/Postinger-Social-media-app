@@ -1,14 +1,13 @@
 "use client";
-import { useCustomInfiniteQuery } from "@/hooks/useCustomInfiniteQuery";
+import { useCustomInfiniteQuery } from "@/shared/hooks/useCustomInfiniteQuery";
 import { getFollowSuggestions } from "@/features/users/services/usersApi";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { useIntersectionObserver } from "@/shared/hooks/useIntersectionObserver";
 import { useEffect } from "react";
-import { FollowSuggestionCard } from "@/features/users/components/FollowSuggestionCard";
-import {
-  FollowSuggestionsSkeleton,
-} from "./FollowSuggestionsSkeleton";
+import { FollowSuggestionCard } from "@/features/users/components/suggestions-card/FollowSuggestionCard";
+import { FollowSuggestionsSkeleton } from "./FollowSuggestionsSkeleton";
 import { FollowSuggestionError } from "./FollowSuggestionError";
 import { NoFollowSuggestions } from "./NoFollowSuggestions";
+import { User } from "../../types";
 
 export const FollowSuggestions = () => {
   const {
@@ -19,7 +18,7 @@ export const FollowSuggestions = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useCustomInfiniteQuery({
+  } = useCustomInfiniteQuery<undefined, User>({
     queryKey: ["users", "follow-suggestions"],
     queryFn: getFollowSuggestions,
   });

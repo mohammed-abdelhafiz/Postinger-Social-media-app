@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
       {
         hostname: "images.unsplash.com",
       },
+      {
+        hostname: "cdn.shadcnstudio.com",
+      },
+      {
+        hostname: "www.gravatar.com",
+      },
     ],
   },
   async rewrites() {

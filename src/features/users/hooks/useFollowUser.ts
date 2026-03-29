@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient, InfiniteData } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ApiError } from "@/lib/apiError";
+import { ApiError } from "@/shared/lib/apiError";
 import { followUser, FollowUserData } from "../services/usersApi";
-import { User } from "@/types";
+import { User } from "@/shared/types";
 
 export const useFollowUser = () => {
   const queryClient = useQueryClient();

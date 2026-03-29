@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../services/authApi";
 import { toast } from "sonner";
-import { ApiError } from "@/lib/apiError";
+import { ApiError } from "@/shared/lib/apiError";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/auth.store";
+import { useAuthStore } from "@/shared/store/auth.store";
 
 export const useRegisterMutation = () => {
   const router = useRouter();
