@@ -12,7 +12,7 @@ export default function AuthLayout({
     <main className="relative md:h-screen md:overflow-hidden lg:grid lg:grid-cols-2">
       <div className="relative hidden h-full flex-col border-r border-muted p-10 lg:flex">
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background" />
-        <Logo className="fixed top-4 left-4 z-50" />
+        <Logo className="absolute top-10 left-10 z-50 flex-row" />
 
         <div className="absolute inset-0">
           <FloatingPaths position={1} />

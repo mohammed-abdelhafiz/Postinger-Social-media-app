@@ -28,7 +28,7 @@ export const MobileNav = ({ setIsMobileMenuOpen }: MobileNavProps) => {
     { name: "Chats", href: "/chats", icon: <MessageCircle size={20} /> },
     {
       name: "Profile",
-      href: `/profile/${user?.username}`,
+      href: user ? `/profile/${user.username}` : "/profile",
       icon: <User size={20} />,
     },
     { name: "Notifications", href: "/notifications", icon: <Bell size={20} /> },

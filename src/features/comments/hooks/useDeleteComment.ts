@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { usePostContext } from "../../posts/context/PostContext";
 import { useFeedStore } from "@/shared/store/feed.store";
@@ -190,3 +190,4 @@ export const useDeleteComment = () => {
     },
   });
 };
+

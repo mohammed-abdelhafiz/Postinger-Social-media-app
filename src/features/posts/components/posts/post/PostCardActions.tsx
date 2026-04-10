@@ -17,7 +17,7 @@ import {
 import { DeletePostDialog } from "./DeletePostDialog";
 import { useState } from "react";
 import { EditPostDialog } from "./EditPostDialog";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { usePostContext } from "@/features/posts/context/PostContext";
 
 export function PostCardActions() {
@@ -84,3 +84,4 @@ export function PostCardActions() {
     </div>
   );
 }
+

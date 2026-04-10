@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { resetPassword } from "../services/authApi";
 import { useRouter } from "next/navigation";
@@ -23,3 +23,4 @@ export const useResetPasswordMutation = () => {
     },
   });
 };
+

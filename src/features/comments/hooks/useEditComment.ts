@@ -1,5 +1,5 @@
 import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { usePostContext } from "../../posts/context/PostContext";
 import { editComment } from "../services/commentsApi";
@@ -63,3 +63,4 @@ export const useEditComment = () => {
     },
   });
 };
+

@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { useAuthStore } from "@/shared/store/auth.store";
 import { usePostContext } from "../../posts/context/PostContext";
@@ -179,3 +179,4 @@ function createOptimisticComment(postId: string, content: string): Comment {
   };
   return optimisticComment;
 }
+

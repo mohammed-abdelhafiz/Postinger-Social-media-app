@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../services/authApi";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -30,3 +30,4 @@ export const useLogoutMutation = () => {
     },
   });
 };
+

@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { deletePost } from "../services/postsApi";
 import { DeletePostData, Post, PostsQueryPage } from "../types";
@@ -119,3 +119,4 @@ export const useDeletePost = () => {
     },
   });
 };
+

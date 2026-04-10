@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { forgotPassword } from "../services/authApi";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 
 export const useForgotPasswordMutation = () => {
@@ -20,3 +20,4 @@ export const useForgotPasswordMutation = () => {
     },
   });
 };
+

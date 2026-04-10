@@ -24,6 +24,7 @@ import { useState } from "react";
 import { LikesDialog } from "./like/LikesDialog";
 import { useLikePost } from "@/features/posts/hooks/useLikePost";
 import { useUnlikePost } from "@/features/posts/hooks/useUnlikePost";
+import Link from "next/link";
 
 interface PostCardProps {
   priority?: boolean;
@@ -50,28 +51,34 @@ export default function PostCard({ priority = false }: PostCardProps) {
     "
     >
       <CardHeader className="flex gap-3">
-        <Avatar className="shrink-0">
-          <AvatarImage
-            src={post.author.avatar?.url}
-            alt={post.author.username}
-          />
-          <AvatarFallback>{post.author.username?.charAt(0)}</AvatarFallback>
-        </Avatar>
+        <Link href={`/profile/${post.author.username}`}>
+          <Avatar className="shrink-0">
+            <AvatarImage
+              src={post.author.avatar?.url}
+              alt={post.author.username}
+            />
+            <AvatarFallback>{post.author.username?.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </Link>
 
         <div className="flex items-start justify-between flex-1">
           <div className="flex flex-col">
             <div className="flex items-center">
-              <span className="cursor-pointer font-semibold hover:underline">
-                {post.author.name}
-              </span>
+              <Link href={`/profile/${post.author.username}`}>
+                <span className="cursor-pointer font-semibold hover:underline">
+                  {post.author.name}
+                </span>
+              </Link>
               <Dot className="h-4 w-4" />
               <span className="text-sm text-muted-foreground">
                 {timeAgo(post.createdAt)}
               </span>
             </div>
-            <span className="text-xs text-muted-foreground">
-              @{post.author.username}
-            </span>
+            <Link href={`/profile/${post.author.username}`}>
+              <span className="text-xs text-muted-foreground">
+                @{post.author.username}
+              </span>
+            </Link>
           </div>
           {post.author._id === user?._id && <PostCardActions />}
         </div>

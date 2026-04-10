@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { editPost } from "../services/postsApi";
 import { EditPostData, PostsQueryPage } from "../types";
@@ -169,3 +169,4 @@ function updatePostInCache(
 
   return { updatedData, newObjectUrl };
 }
+

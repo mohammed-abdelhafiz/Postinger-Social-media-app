@@ -1,21 +1,38 @@
+"use client";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Home, Bell, User } from "lucide-react";
 import { NavItem } from "@/shared/types";
 import { useAuthStore } from "@/shared/store/auth.store";
+import React from "react";
 
 
 
 export function Nav() {
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="w-full max-w-md hidden md:block h-8 bg-muted/20 animate-pulse rounded-lg" />
+    );
+  }
 
   const navItems: NavItem[] = [
-  { name: "Home", href: "/", icon: <Home /> },
-  { name: "Profile", href: `/profile/${user?.username}`, icon: <User size={20} /> },
-  { name: "Notifications", href: "/notifications", icon: <Bell /> },
-];
+    { name: "Home", href: "/", icon: <Home /> },
+    {
+      name: "Profile",
+      href: user ? `/profile/${user.username}` : "/profile",
+      icon: <User size={20} />,
+    },
+    { name: "Notifications", href: "/notifications", icon: <Bell /> },
+  ];
   return (
     <div className="w-full max-w-md hidden md:block">
       <Tabs value={pathname}>
@@ -24,6 +41,7 @@ export function Nav() {
             <TabsTrigger
               key={item.name}
               value={item.href}
+              disabled={item.name === "Profile" && !user}
               render={
                 <Link
                   href={item.href}

@@ -81,6 +81,7 @@ export function FormDialog() {
               {...register("text")}
               disabled={createPostMutation.isPending}
               maxLength={2000}
+              autoFocus
             />
             {errors.text && (
               <p className="text-red-500 text-sm">{errors.text.message}</p>
@@ -99,7 +100,7 @@ export function FormDialog() {
             <div className="flex items-center">
               <EmojiSelector
                 onEmojiSelect={({ emoji }) => {
-                  setValue("text", text + emoji);
+                  setValue("text", text ? text + emoji : emoji);
                 }}
               />
               <div className="flex items-center ml-auto">

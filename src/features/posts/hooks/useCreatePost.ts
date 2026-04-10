@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { createPost } from "../services/postsApi";
 import { useAuthStore } from "@/shared/store/auth.store";
@@ -136,3 +136,4 @@ function createOptimisticPost(postData: CreatePostData): Post {
   };
   return optimisticPost;
 }
+

@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Outfit } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/shared/providers/ReactQueryProvider";
-import { Toaster } from "@/shared/components/ui/sonner";
 import { ThemeProvider } from "@/shared/providers/ThemeProvider";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { cn } from "@/shared/lib/utils";
 import { AuthProvider } from "@/shared/providers/AuthProvider";
+import { StunningToaster } from "@/shared/components/shared/StunningToaster";
 
 const geistHeading = Geist({ subsets: ["latin"], variable: "--font-heading" });
 
@@ -35,7 +35,7 @@ export default function RootLayout({
               <AuthProvider>
                 <main className="min-h-screen">{children}</main>
               </AuthProvider>
-              <Toaster richColors />
+              <StunningToaster />
             </ReactQueryProvider>
           </TooltipProvider>
         </ThemeProvider>

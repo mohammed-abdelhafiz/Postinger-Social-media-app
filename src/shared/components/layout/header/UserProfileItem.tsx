@@ -54,18 +54,18 @@ export function UserProfileItem() {
               <AvatarImage src={user.avatar.url} />
               <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>
-            <div className="flex flex-col">
-              <span className="text-foreground text-sm font-medium">
+            <div className="flex flex-col min-w-0">
+              <span className="text-foreground text-sm font-medium truncate">
                 {user.name}
               </span>
-              <span className="text-muted-foreground text-xs">
+              <span className="text-muted-foreground text-xs truncate">
                 {user?.email}
               </span>
             </div>
           </div>
           <DropdownMenuGroup className="mt-4">
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <Link href={`/profile/${user.username}`} className="flex items-center gap-2">
+              <Link href={user.username ? `/profile/${user.username}` : "/profile"} className="flex items-center gap-2">
                 <UserIcon aria-hidden="true" />
                 Profile
               </Link>

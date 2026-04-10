@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { ApiError } from "@/shared/lib/apiError";
 import { usePostContext } from "../../posts/context/PostContext";
 import { likeComment } from "../services/commentsApi";
@@ -64,3 +64,4 @@ export const useLikeComment = () => {
     },
   });
 };
+

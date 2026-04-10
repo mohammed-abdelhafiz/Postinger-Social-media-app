@@ -3,7 +3,7 @@
 import { Button } from "@/shared/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
 import { Separator } from "@/shared/components/ui/separator";
-import { Check, Mail } from "lucide-react";
+import { Check } from "lucide-react";
 import Image from "next/image";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 import { useAuthStore } from "@/shared/store/auth.store";
@@ -11,6 +11,7 @@ import { ProfileCardSkeleton } from "./ProfileCardSkeleton";
 import { notFound } from "next/navigation";
 import { ProfileCardError } from "./ProfileCardError";
 import { useFollowUser } from "../../hooks/useFollowUser";
+import { useUnfollowUser } from "../../hooks/useUnfollowUser";
 
 interface ProfileCardProps {
   username: string;
@@ -18,6 +19,7 @@ interface ProfileCardProps {
 
 export const ProfileCard = ({ username }: ProfileCardProps) => {
   const followUserMutation = useFollowUser();
+  const unfollowUserMutation = useUnfollowUser();
   const {
     data: user,
     isLoading,
@@ -28,54 +30,83 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
   const authUser = useAuthStore((state) => state.user);
   const isOwner = user?._id === authUser?._id;
   const isFollowing = user?.isFollowing;
-  if (isLoading || !authUser) {
+  
+  if (isLoading || !authUser || username === "undefined") {
     return <ProfileCardSkeleton />;
   }
 
-  if (!user || error?.message === "User not found") {
+  if (!user || (error && error.message === "User not found")) {
     return notFound();
   }
 
   if (isError) {
     return <ProfileCardError refetch={refetch} />;
   }
+  
   const handleFollow = () => {
-    followUserMutation.mutate({username});
+    followUserMutation.mutate({ username });
   };
+
+  const handleUnfollow = () => {
+    unfollowUserMutation.mutate({ username });
+  };
+
   return (
     <Card className="md:w-5/12 w-full p-0 h-fit!">
       <CardHeader className="p-0 w-full h-36 overflow-hidden relative">
-        <Image src={user.coverImage.url} alt="profile image" fill />
+        <Image
+          src={
+            user.coverImage?.url ||
+            "https://images.unsplash.com/photo-1660491630578-4299a3c09db0?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
+          alt="cover image"
+          fill
+        />
       </CardHeader>
       <CardContent className="space-y-4 pb-4">
         <div className="flex justify-between h-10">
           <div className="w-24 h-24 rounded-full overflow-hidden translate-y-[-65%] relative">
-            <Image src={user.avatar.url} alt="profile image" fill />
+            <Image
+              src={
+                user.avatar?.url ||
+                "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+              }
+              alt="avatar"
+              fill
+            />
           </div>
-          {isOwner && <Button variant="outline">Edit Profile</Button>}
+          {isOwner ? (
+            <Button variant="outline">Edit Profile</Button>
+          ) : (
+            <div className="flex items-center">
+              {isFollowing ? (
+                <Button 
+                  className="w-24" 
+                  variant="outline" 
+                  onClick={handleUnfollow}
+                  disabled={unfollowUserMutation.isPending || followUserMutation.isPending}
+                >
+                  Following <Check />
+                </Button>
+              ) : (
+                <Button 
+                  className="w-24" 
+                  onClick={handleFollow}
+                  disabled={followUserMutation.isPending || unfollowUserMutation.isPending}
+                >
+                  Follow
+                </Button>
+              )}
+            </div>
+          )}
         </div>
         <div className="flex flex-col">
           <h1 className="text-xl font-bold">{user.name}</h1>
           <p className="text-muted-foreground text-sm pl-0.5">
             {user.username}
           </p>
+
         </div>
-        {!isOwner && (
-          <div className="flex items-center">
-            {isFollowing ? (
-              <Button className="w-24" variant="outline">
-                Following <Check />
-              </Button>
-            ) : (
-              <Button className="w-24" onClick={handleFollow}>
-                Follow
-              </Button>
-            )}
-            <Button variant="ghost" size="icon-lg" aria-label="Send message">
-              <Mail />
-            </Button>
-          </div>
-        )}
         <p className="text-sm text-muted-foreground line-clamp-3">{user.bio}</p>
         <Separator />
         <div className="flex items-center justify-around">
