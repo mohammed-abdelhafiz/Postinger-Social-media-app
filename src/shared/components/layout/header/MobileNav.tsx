@@ -6,6 +6,7 @@ import { useLogoutMutation } from "@/features/auth/hooks/useLogout";
 import { Button } from "@/shared/components/ui/button";
 import { ThemeToggle } from "@/shared/components/shared/ThemeToggle";
 import { useAuthStore } from "@/shared/store/auth.store";
+import { useUnreadCount } from "@/features/notifications/hooks";
 
 const mobileMenuVariants = {
   closed: { opacity: 0, height: 0 },
@@ -23,6 +24,7 @@ interface MobileNavProps {
 export const MobileNav = ({ setIsMobileMenuOpen }: MobileNavProps) => {
   const logoutMutation = useLogoutMutation();
   const user = useAuthStore((state) => state.user);
+  const { data: unreadCount = 0 } = useUnreadCount();
   const navItems: NavItem[] = [
     { name: "Home", href: "/", icon: <Home size={20} /> },
     { name: "Chats", href: "/chats", icon: <MessageCircle size={20} /> },
@@ -31,7 +33,18 @@ export const MobileNav = ({ setIsMobileMenuOpen }: MobileNavProps) => {
       href: user ? `/profile/${user.username}` : "/profile",
       icon: <User size={20} />,
     },
-    { name: "Notifications", href: "/notifications", icon: <Bell size={20} /> },
+    { 
+      name: "Notifications", 
+      href: "/notifications", 
+      icon: (
+        <div className="relative">
+          <Bell size={20} />
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 size-2 bg-destructive rounded-full" />
+          )}
+        </div>
+      ) 
+    },
     { name: "Settings", href: "/settings", icon: <Settings size={20} /> },
   ];
   return (
