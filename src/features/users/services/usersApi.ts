@@ -36,3 +36,18 @@ export const getUserPosts = async ({
   );
   return response.data;
 };
+
+export const updateUserProfile = async ({
+  userId,
+  formData,
+}: {
+  userId: string;
+  formData: FormData;
+}) => {
+  const response = await api.put(`/users/${userId}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};

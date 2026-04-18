@@ -12,6 +12,8 @@ import { notFound } from "next/navigation";
 import { ProfileCardError } from "./ProfileCardError";
 import { useFollowUser } from "../../hooks/useFollowUser";
 import { useUnfollowUser } from "../../hooks/useUnfollowUser";
+import { useState } from "react";
+import { EditProfileModal } from "./EditProfileModal";
 
 interface ProfileCardProps {
   username: string;
@@ -28,6 +30,7 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
     refetch,
   } = useGetUserProfile(username);
   const authUser = useAuthStore((state) => state.user);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const isOwner = user?._id === authUser?._id;
   const isFollowing = user?.isFollowing;
   
@@ -76,7 +79,18 @@ export const ProfileCard = ({ username }: ProfileCardProps) => {
             />
           </div>
           {isOwner ? (
-            <Button variant="outline">Edit Profile</Button>
+            <>
+              <Button variant="outline" onClick={() => setIsEditModalOpen(true)}>
+                Edit Profile
+              </Button>
+              {user && (
+                <EditProfileModal
+                  user={user}
+                  isOpen={isEditModalOpen}
+                  onClose={() => setIsEditModalOpen(false)}
+                />
+              )}
+            </>
           ) : (
             <div className="flex items-center">
               {isFollowing ? (
